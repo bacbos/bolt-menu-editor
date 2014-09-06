@@ -1,0 +1,32 @@
+<!-- menu editor vars and locales and stuff -->
+<script>
+    var _me = {
+        // lockfile
+        writeLock                       : {{ writeLock }},
+
+        // labels
+        trans_nolabelset                : "{{ __("no label set") }}",
+        trans_label                     : "{{ __("label") }}",
+        trans_title                     : "{{ __("title") }}",
+        trans_class                     : "{{ __("css classes") }}",
+        trans_url                       : "{{ __("http://") }}",
+
+        // general messages
+        trans_additem                   : "{{ __("Select an item to add") }}",
+        trans_searchitem                : "{{ __("Search for an item to add") }}",
+        trans_save                      : "{{ __("Save") }}",
+        trans_removefrommenu            : "{{ __("Remove from menu") }}",
+        trans_deleteWithSubmenus        : "{{ __("Are you sure you wish to remove this item from the menu, along with all its sub-items?") }}",
+        trans_menualreadyexists         : "{{ __("A menu with this name already exists...") }}",
+        trans_restorebackup             : "{{ __("Please confirm that you wish to restore the menu") }}",
+        trans_revertChanges             : "{{ __("Are you sure you want to revert changes you have made since you last saved your menus?") }}",
+
+        // errors
+        trans_connectionError           : "{{ __("Something went wrong, please reload the page and try again") }}",
+        trans_writeLockError            : "{{ __("The menu.yml config-file was edited by someone else in the meantime, please reload the page.") }}",
+        trans_writeError                : "{{ __("Unable to save your menu.") }}",
+        trans_parseError                : "{{ __("There's something wrong with this extension, please report to the author and edit your menu manually until this is fixed.") }}",
+        trans_backupFailError           : "{{ __("Unable to save backup! Please make sure MenuEditor/backups is writable by your webserver or disable the feature in the extensions configuration.") }}",
+        trans_backupRestoreFailError    : "{{ __("The backup could not be restored: ") }}"
+    }
+</script>

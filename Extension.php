@@ -17,9 +17,12 @@ class MenuEditorException extends \Exception {};
  */
 class Extension extends \Bolt\BaseExtension
 {
+    private $dev = false;
+
     private $authorized = false;
     private $backupDir;
     private $translationDir;
+
     public  $config;
 
     /**
@@ -68,7 +71,7 @@ class Extension extends \Bolt\BaseExtension
         {
 
             $this->path = $this->app['config']->get('general/branding/path') . '/extensions/menu-editor';
-            $this->app->match($this->path, array($this, 'loadMenuEditor'));
+            $this->app->match($this->path, array($this, 'MenuEditor'));
 
             $this->translationDir = __DIR__.'/translations/' . $this->app['locale'];
             if (is_dir($this->translationDir))
@@ -84,7 +87,7 @@ class Extension extends \Bolt\BaseExtension
                 }
             }
 
-            $this->addMenuOption(__('Menu editor'), $this->app['paths']['bolt'] . 'extensions/menu-editor', "icon-list");
+            $this->addMenuOption(__('Menu editor'), $this->app['paths']['bolt'] . 'extensions/menu-editor', "rocket");
 
         }
     }
@@ -95,9 +98,8 @@ class Extension extends \Bolt\BaseExtension
      * @return Response|\Symfony\Component\HttpFoundation\JsonResponse
      * @throws \Exception
      */
-    public function loadMenuEditor()
+    public function MenuEditor()
     {
-
         /**
          * check if menu.yml is writable
          */
@@ -111,18 +113,33 @@ class Extension extends \Bolt\BaseExtension
             $writeLock = 0;
         }
 
-        /**
-         * try to set symlink to localized readme
-         */
-        $lastLocale = $this->app['cache']->contains('extension_MenuEditor') ? $this->app['cache']->fetch('extension_MenuEditor') : 'unknown';
-        $lastLocale != $this->app['locale'] && @is_writable(__DIR__) ? $this->localizeReadme() : null;
+        // add MenuEditor template namespace to twig
+        $this->app['twig.loader.filesystem']->addPath(__DIR__.'/views/', 'MenuEditor');
 
         /**
          * process xhr-post
          */
-        if ('POST' == $this->app['request']->getMethod() &&
-            true === $this->app['request']->isXmlHttpRequest())
+        if (true === $this->app['request']->isXmlHttpRequest() && 'POST' == $this->app['request']->getMethod())
         {
+            /**
+             * render new item
+             */
+            try {
+                if ($attributes = $this->app['request']->get('newitem')) {
+                    if ($attributes['path'] != '') {
+                        unset($attributes['link']);
+                    }
+
+                    $html = $this->app['render']->render('@MenuEditor/_menuitem.twig', array(
+                        'item' => $attributes
+                    ));
+
+                    return $this->app->json(array('status' => 0, 'html' => $html));
+                }
+
+            } catch (MenuEditorException $e) {
+                return $this->app->json(array('status' => 1, 'error' => $e->getMessage()));
+            }
 
             /**
              * restore backup
@@ -136,7 +153,6 @@ class Extension extends \Bolt\BaseExtension
                     }
 
                     throw new MenuEditorException(__("Backup file could not be found"));
-
                 }
 
             } catch (MenuEditorException $e) {
@@ -147,9 +163,10 @@ class Extension extends \Bolt\BaseExtension
              * save menu(s)
              */
             try {
-                if ($menus          = $this->app['request']->get('menus') &&
-                    $writeLockToken = $this->app['request']->get('writeLock'))
-                {
+                if (
+                        $menus          = $this->app['request']->get('menus')
+                    &&  $writeLockToken = $this->app['request']->get('writeLock')
+                ){
 
                     // don't proceed if the file was edited in the meantime
                     if ($writeLock != $writeLockToken) {
@@ -221,13 +238,11 @@ class Extension extends \Bolt\BaseExtension
 
                     return $this->app->json(array('records' => $retVal));
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
 
             }
-        }
 
-        // add MenuEditor template namespace to twig
-        $this->app['twig.loader.filesystem']->addPath(__DIR__.'/views/', 'MenuEditor');
+        }
 
         /**
          * load stuff
@@ -246,9 +261,7 @@ class Extension extends \Bolt\BaseExtension
             $taxonomys[$tK]['me_options'] = array();
 
             // fetch slugs
-            if (isset($taxonomy['behaves_like']) && 'tags' == $taxonomy['behaves_like'])
-            {
-
+            if (isset($taxonomy['behaves_like']) && 'tags' == $taxonomy['behaves_like']) {
                 $prefix = $this->app['config']->get('general/database/prefix', "bolt_");
 
                 $taxonomytype = $tK;
@@ -261,7 +274,6 @@ class Extension extends \Bolt\BaseExtension
                         $taxonomys[$tK]['me_options'][$taxonomy['singular_slug'] .'/'. $result['slug']] = $result['slug'];
                     }
                 }
-
             }
 
             if (isset($taxonomy['behaves_like']) && 'grouping' == $taxonomy['behaves_like']) {
@@ -295,7 +307,8 @@ class Extension extends \Bolt\BaseExtension
             'taxonomys'     => $taxonomys,
             'menus'         => $menus,
             'writeLock'     => $writeLock,
-            'backups'       => $backups
+            'backups'       => $backups,
+            'readme'        => $this->getLocalizedReadme()
         ));
 
         return new Response($this->injectAssets($body));
@@ -309,13 +322,15 @@ class Extension extends \Bolt\BaseExtension
     private function injectAssets($html)
     {
 
-        $urlbase = $this->app['paths']['app'];
+        $urlbase = $this->app['paths']['extensions'] . 'vendor/bolt/menueditor/';
 
-        $assets = '<script src="{urlbase}/extensions/MenuEditor/assets/jquery.nestable.min.js"></script>
-<script src="{urlbase}/extensions/MenuEditor/assets/bootbox.min.js"></script>
-<script src="{urlbase}/extensions/MenuEditor/assets/menueditor.js"></script>
-<link rel="stylesheet" href="{urlbase}/extensions/MenuEditor/assets/menueditor.css">';
+        if ($this->dev) {
+            $assets = '<script data-main="{urlbase}assets/app" src="{urlbase}assets/bower_components/requirejs/require.js"></script>';
+        } else {
+            $assets = '<script src="{urlbase}assets/app.min.js"></script>';
+        }
 
+        $assets .= '<link rel="stylesheet" href="{urlbase}assets/bolt-menu-editor/menueditor.css">';
         $assets = preg_replace('~\{urlbase\}~', $urlbase, $assets);
 
         // Insert just before </head>
@@ -338,12 +353,11 @@ class Extension extends \Bolt\BaseExtension
 
         if (!@is_dir($this->backupDir) && !@mkdir($this->backupDir)) {
             // dir doesn't exist and I can't create it
-            throw new MenuEditorException($justFetchList ? __("Please make sure that there is a MenuEditor/backups folder or disable the backup-feature in config.yml") : $writeLock, 5);
+            throw new MenuEditorException($justFetchList ? __("Please make sure that there is a MenuEditor/backups folder or disable the backup-feature in MenuEditor.yml") : $writeLock, 5);
         }
 
         // try to save a backup
-        if (false === $justFetchList &&
-            !@copy(BOLT_CONFIG_DIR . '/menu.yml', $this->backupDir . '/menu.'. time() . '.yml'))
+        if (false === $justFetchList && !@copy(BOLT_CONFIG_DIR . '/menu.yml', $this->backupDir . '/menu.'. time() . '.yml'))
         {
             throw new MenuEditorException($writeLock, 5);
         }
@@ -362,7 +376,7 @@ class Extension extends \Bolt\BaseExtension
             if (count($backupFiles) == 0)
             {
                 if (!@copy(BOLT_CONFIG_DIR . '/menu.yml', $this->backupDir . '/menu.'. time() . '.yml')) {
-                    throw new MenuEditorException(__("Please make sure that the MenuEditor/backups folder is writeable by your webserver or disable the backup-feature in config.yml"));
+                    throw new MenuEditorException(__("Please make sure that the MenuEditor/backups folder is writeable by your webserver or disable the backup-feature in MenuEditor.yml"));
                 }
                 return $this->backup(0, true);
             }
@@ -416,27 +430,19 @@ class Extension extends \Bolt\BaseExtension
     /**
      * symlinks the localized readme file, if existant
      */
-    private function localizeReadme()
+    public function getLocalizedReadme()
     {
+        $filename = __DIR__ . "/translations/readme_". $this->app['locale'] .".md";
+        $fallback = __DIR__ . "/translations/readme_en.md";
+        $changelog = __DIR__ . "/changelog.md";
 
-        $this->app['cache']->save('extension_MenuEditor', $this->app['locale'], 604800);
-
-        if (@file_exists(__DIR__ . '/readme.md')) {
-            if (@is_link(__DIR__ . '/readme.md')) {
-                return;
-            }
-
-            if (@is_dir($this->translationDir))
-            {
-
-                // try to set symbolic link
-                if (@file_exists(__DIR__.'/translations/readme_'. $this->app['locale'] .'.md'))
-                {
-                    @unlink(__DIR__ . '/readme.md');
-                    @symlink(__DIR__.'/translations/readme_'. $this->app['locale'] .'.md', __DIR__ . '/readme.md');
-                }
-            }
+        if (!$readme = file_get_contents($filename)) {
+            $readme = file_get_contents($fallback);
         }
 
+        $changelog = file_get_contents($changelog);
+
+        // Parse the field as Markdown, return HTML
+        return preg_replace("~h1~", "h3", \ParsedownExtra::instance()->text($readme) . \ParsedownExtra::instance()->text($changelog));
     }
 }

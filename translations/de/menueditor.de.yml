@@ -13,7 +13,7 @@
 "Name of new menu": "Name des neuen Menüs"
 "no label set": "ohne label"
 "Overview of all": "Übersicht aller"
-"Remove from menu": "Entfernen"
+"Remove from menu": "Aus Menü entfernen"
 "Restore menu.yml": "menu.yml zurücksetzen"
 "Restore %filename%": "Auf %filename% zurücksetzen"
 "Revert changes": "Änderungen verwerfen"
@@ -23,6 +23,8 @@
 "Special elements": "Spezielle Elemente"
 "title": "title-Attribut"
 "View Readme": "Readme ansehen"
+"Please choose": "Bitte wählen"
+"All content-types": "Alle Inhaltstypen"
 
 
 #--

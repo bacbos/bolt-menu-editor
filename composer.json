@@ -4,10 +4,7 @@
     "type": "bolt-extension",
     "keywords": ["visual", "menu", "editor", "admin", "tool"],
     "require": {
-        "bolt/bolt": ">=2.0.0,<3.0.0",
-        "symfony/http-foundation": "2.5.x-dev",
-        "symfony/translation": "2.5.x-dev",
-        "symfony/yaml": "2.5.x-dev"
+        "bolt/bolt": ">=2.0.0,<3.0.0"
     },
     "authors": [
         {

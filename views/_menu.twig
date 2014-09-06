@@ -1,0 +1,11 @@
+<div class="tabgrouping" data-tab="me-tab-{{ loop.index0 }}" style="display:{% if loop.first %}block{% else %}none{% endif %};">
+    <div class="dd me-menu" id="me-menu-{{ loop.index0 }}" data-menuname="{{ menuname }}">
+        <ol class="dd-list me-menulist">
+
+            {% for item in menu %}
+                {% include '@MenuEditor/_menuitem.twig' with {item: item} %}
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+
