@@ -1,0 +1,31 @@
+{
+    "name": "bolt/menueditor",
+    "description": "A visual MenuEditor for Bolt CMS",
+    "type": "bolt-extension",
+    "keywords": ["visual", "menu", "editor", "admin", "tool"],
+    "require": {
+        "bolt/bolt": ">=2.0.0,<3.0.0",
+        "symfony/http-foundation": "2.5.x-dev",
+        "symfony/translation": "2.5.x-dev",
+        "symfony/yaml": "2.5.x-dev"
+    },
+    "authors": [
+        {
+            "name": "Steven Wüthrich / bacbos lab",
+            "email": "steven.wuethrich@me.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "init.php"
+        ],
+        "psr-4": {
+            "MenuEditor\\": ""
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.*"
+        }
+    }
+}
