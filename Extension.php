@@ -225,7 +225,7 @@ class Extension extends \Bolt\BaseExtension
             try {
                 if ($this->app['request']->get('action') == 'search-contenttypes') {
                     $ct = $this->app['request']->get('ct');
-                    $q = $this->app['request']->get('q');
+                    $q = $this->app['request']->get('meq');
                     $retVal = Array();
                     if (empty($ct)) {
                         $contenttypes = $this->app['config']->get('contenttypes');

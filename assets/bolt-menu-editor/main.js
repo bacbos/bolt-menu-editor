@@ -159,7 +159,7 @@ define([
                     return {
                         action: 'search-contenttypes',
                         ct: $('select.me-addct-filter').val(),
-                        q: term,
+                        meq: term,
                         page_limit: 100
                     };
                 },
