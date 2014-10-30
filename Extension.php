@@ -88,7 +88,7 @@ class Extension extends \Bolt\BaseExtension
                 }
             }
 
-            $this->addMenuOption(Trans::__('Menu editor'), $this->app['paths']['bolt'] . 'extensions/menu-editor', "rocket");
+            $this->addMenuOption(Trans::__('Menu editor'), $this->app['paths']['bolt'] . 'extensions/menu-editor', "fa:rocket");
 
         }
     }
