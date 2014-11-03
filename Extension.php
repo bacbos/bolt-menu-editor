@@ -337,7 +337,7 @@ class Extension extends \Bolt\BaseExtension
         // Insert just before </head>
         preg_match("~^([ \t]*)</head~mi", $html, $matches);
         $replacement = sprintf("%s\t%s\n%s", $matches[1], $assets, $matches[0]);
-        return str_replace_first($matches[0], $replacement, $html);
+        return $this::str_replace_first($matches[0], $replacement, $html);
 
     }
 
@@ -437,7 +437,7 @@ class Extension extends \Bolt\BaseExtension
         $fallback = __DIR__ . "/translations/readme_en.md";
         $changelog = __DIR__ . "/changelog.md";
 
-        if (!$readme = file_get_contents($filename)) {
+        if (!$readme = @file_get_contents($filename)) {
             $readme = file_get_contents($fallback);
         }
 
@@ -446,4 +446,21 @@ class Extension extends \Bolt\BaseExtension
         // Parse the field as Markdown, return HTML
         return preg_replace("~h1~", "h3", \ParsedownExtra::instance()->text($readme) . \ParsedownExtra::instance()->text($changelog));
     }
+
+    /**
+     * @param $search
+     * @param $replace
+     * @param $subject
+     * @return mixed
+     *
+     */
+    private function str_replace_first($search, $replace, $subject)
+    {
+        $pos = strpos($subject, $search);
+        if ($pos !== false) {
+            $subject = substr_replace($subject, $replace, $pos, strlen($search));
+        }
+        return $subject;
+    }
+
 }
