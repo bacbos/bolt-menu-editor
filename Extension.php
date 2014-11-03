@@ -2,6 +2,7 @@
 
 namespace MenuEditor;
 
+use Bolt\Translation\Translator as Trans;
 use Symfony\Component\HttpFoundation\Response,
     Symfony\Component\Translation\Loader as TranslationLoader;
 use Symfony\Component\Yaml\Dumper as YamlDumper,
@@ -87,7 +88,7 @@ class Extension extends \Bolt\BaseExtension
                 }
             }
 
-            $this->addMenuOption(__('Menu editor'), $this->app['paths']['bolt'] . 'extensions/menu-editor', "rocket");
+            $this->addMenuOption(Trans::__('Menu editor'), $this->app['paths']['bolt'] . 'extensions/menu-editor', "fa:rocket");
 
         }
     }
@@ -106,7 +107,7 @@ class Extension extends \Bolt\BaseExtension
         $file = BOLT_CONFIG_DIR . '/menu.yml';
         if (@!is_readable($file) || !@is_writable($file)) {
             throw new \Exception(
-                __("The file '%s' is not writable. You will have to use your own editor to make modifications to this file.",
+                Trans::__("The file '%s' is not writable. You will have to use your own editor to make modifications to this file.",
                     array('%s' => $file)));
         }
         if (!$writeLock = @filemtime($file)) {
@@ -148,11 +149,11 @@ class Extension extends \Bolt\BaseExtension
                 if ($filetime = $this->app['request']->get('filetime')) {
 
                     if ($this->restoreBackup($filetime)) {
-                        $this->app['session']->getFlashBag()->set('success', __('Backup successfully restored'));
+                        $this->app['session']->getFlashBag()->set('success', Trans::__('Backup successfully restored'));
                         return $this->app->json(array('status' => 0));
                     }
 
-                    throw new MenuEditorException(__("Backup file could not be found"));
+                    throw new MenuEditorException(Trans::__("Backup file could not be found"));
                 }
 
             } catch (MenuEditorException $e) {
@@ -200,9 +201,9 @@ class Extension extends \Bolt\BaseExtension
                         $writeLock = filemtime($file);
 
                         if (count($this->app['request']->get('menus')) > 1) {
-                            $message = __("Menus successfully saved");
+                            $message = Trans::__("Menus successfully saved");
                         } else {
-                            $message = __("Menu successfully saved");
+                            $message = Trans::__("Menu successfully saved");
                         }
                         $this->app['session']->getFlashBag()->set('success', $message);
 
@@ -353,7 +354,7 @@ class Extension extends \Bolt\BaseExtension
 
         if (!@is_dir($this->backupDir) && !@mkdir($this->backupDir)) {
             // dir doesn't exist and I can't create it
-            throw new MenuEditorException($justFetchList ? __("Please make sure that there is a MenuEditor/backups folder or disable the backup-feature in MenuEditor.yml") : $writeLock, 5);
+            throw new MenuEditorException($justFetchList ? Trans::__("Please make sure that there is a MenuEditor/backups folder or disable the backup-feature in MenuEditor.yml") : $writeLock, 5);
         }
 
         // try to save a backup
@@ -376,7 +377,7 @@ class Extension extends \Bolt\BaseExtension
             if (count($backupFiles) == 0)
             {
                 if (!@copy(BOLT_CONFIG_DIR . '/menu.yml', $this->backupDir . '/menu.'. time() . '.yml')) {
-                    throw new MenuEditorException(__("Please make sure that the MenuEditor/backups folder is writeable by your webserver or disable the backup-feature in MenuEditor.yml"));
+                    throw new MenuEditorException(Trans::__("Please make sure that the MenuEditor/backups folder is writeable by your webserver or disable the backup-feature in MenuEditor.yml"));
                 }
                 return $this->backup(0, true);
             }
@@ -419,7 +420,7 @@ class Extension extends \Bolt\BaseExtension
                     return true;
                 }
 
-                throw new MenuEditorException(__("Unable to overwrite menu.yml"));
+                throw new MenuEditorException(Trans::__("Unable to overwrite menu.yml"));
             }
         }
 
