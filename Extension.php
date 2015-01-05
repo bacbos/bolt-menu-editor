@@ -1,6 +1,6 @@
 <?php
 
-namespace MenuEditor;
+namespace Bolt\Extension\bacboslab\menueditor;
 
 use Bolt\Translation\Translator as Trans;
 use Symfony\Component\HttpFoundation\Response,
@@ -74,7 +74,8 @@ class Extension extends \Bolt\BaseExtension
             $this->path = $this->app['config']->get('general/branding/path') . '/extensions/menu-editor';
             $this->app->match($this->path, array($this, 'MenuEditor'));
 
-            $this->translationDir = __DIR__.'/translations/' . $this->app['locale'];
+            $this->translationDir = __DIR__.'/locales/' . substr($this->app['locale'], 0, 2);
+
             if (is_dir($this->translationDir))
             {
                 $iterator = new \DirectoryIterator($this->translationDir);
@@ -323,12 +324,15 @@ class Extension extends \Bolt\BaseExtension
     private function injectAssets($html)
     {
 
-        $urlbase = $this->app['paths']['extensions'] . 'vendor/bolt/menueditor/';
-
         if ($this->dev) {
+            $urlbase = $this->app['paths']['extensions'] . 'local/bacboslab/menueditor/';
             $assets = '<script data-main="{urlbase}assets/app" src="{urlbase}assets/bower_components/requirejs/require.js"></script>';
         } else {
-            $assets = '<script src="{urlbase}assets/app.min.js"></script>';
+            $urlbase = $this->app['paths']['extensions'] . 'vendor/bacboslab/menueditor/';
+            //$assets = '<script src="{urlbase}assets/app.min.js"></script>';
+
+            // current workaround for firefox issues [v 2.0.2]
+            $assets = '<script data-main="{urlbase}assets/app" src="{urlbase}assets/bower_components/requirejs/require.js"></script>';
         }
 
         $assets .= '<link rel="stylesheet" href="{urlbase}assets/bolt-menu-editor/menueditor.css">';
@@ -354,7 +358,7 @@ class Extension extends \Bolt\BaseExtension
 
         if (!@is_dir($this->backupDir) && !@mkdir($this->backupDir)) {
             // dir doesn't exist and I can't create it
-            throw new MenuEditorException($justFetchList ? Trans::__("Please make sure that there is a MenuEditor/backups folder or disable the backup-feature in MenuEditor.yml") : $writeLock, 5);
+            throw new MenuEditorException($justFetchList ? Trans::__("Please make sure that there is a menueditor/backups folder or disable the backup-feature in config.yml") : $writeLock, 5);
         }
 
         // try to save a backup
@@ -377,7 +381,7 @@ class Extension extends \Bolt\BaseExtension
             if (count($backupFiles) == 0)
             {
                 if (!@copy(BOLT_CONFIG_DIR . '/menu.yml', $this->backupDir . '/menu.'. time() . '.yml')) {
-                    throw new MenuEditorException(Trans::__("Please make sure that the MenuEditor/backups folder is writeable by your webserver or disable the backup-feature in MenuEditor.yml"));
+                    throw new MenuEditorException(Trans::__("Please make sure that the menueditor/backups folder is writeable by your webserver or disable the backup-feature in config.yml"));
                 }
                 return $this->backup(0, true);
             }
@@ -433,8 +437,8 @@ class Extension extends \Bolt\BaseExtension
      */
     public function getLocalizedReadme()
     {
-        $filename = __DIR__ . "/translations/readme_". $this->app['locale'] .".md";
-        $fallback = __DIR__ . "/translations/readme_en.md";
+        $filename = __DIR__ . "/locales/readme_". substr($this->app['locale'], 0, 2) .".md";
+        $fallback = __DIR__ . "/locales/readme_en.md";
         $changelog = __DIR__ . "/changelog.md";
 
         if (!$readme = @file_get_contents($filename)) {

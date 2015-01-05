@@ -58,10 +58,10 @@
 "Unable to save your menu.": "No se puede guardar en el menú."
 
 
-"Please make sure that the MenuEditor/backups folder is writeable by your webserver or disable the backup-feature in config.yml": "Por favor, asegúrate de que la carpeta MenuEditor/backups sea escribible por el servidor web o desactivar la función de copia de seguridad en config.yml"
+"Please make sure that the menueditor/backups folder is writeable by your webserver or disable the backup-feature in config.yml": "Por favor, asegúrate de que la carpeta menueditor/backups sea escribible por el servidor web o desactivar la función de copia de seguridad en config.yml"
 
-"Please make sure that there is a MenuEditor/backups folder or disable the backup-feature in config.yml": "Por favor, asegúrate de que haya una carpeta en MenuEditor/backups o desactiva la función de guardar copia de seguridad en config.yml"
+"Please make sure that there is a menueditor/backups folder or disable the backup-feature in config.yml": "Por favor, asegúrate de que haya una carpeta en menueditor/backups o desactiva la función de guardar copia de seguridad en config.yml"
 
 "There's something wrong with this extension, please report to the author and edit your menu manually until this is fixed.": "Hay algo mal con esta extensión, por favor notifica al autor y edita el contenido del menú manualmente hasta que los errores sean corregidos"
 
-"Unable to save backup! Please make sure MenuEditor/backups is writable by your webserver or disable the feature in the extensions configuration.": "¡No se pudo guardar la copia de seguridad! Por favor, asegúrate de que la carpeta MenuEditor/backups sea escribible por el servidor web o desactivar la función de copias de seguridad en config.yml"
+"Unable to save backup! Please make sure menueditor/backups is writable by your webserver or disable the feature in the extensions configuration.": "¡No se pudo guardar la copia de seguridad! Por favor, asegúrate de que la carpeta menueditor/backups sea escribible por el servidor web o desactivar la función de copias de seguridad en config.yml"

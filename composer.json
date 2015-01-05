@@ -1,6 +1,6 @@
 {
-    "name": "bolt/menueditor",
-    "description": "A visual MenuEditor for Bolt CMS",
+    "name": "bacboslab/menueditor",
+    "description": "A visual menu editor for Bolt CMS",
     "type": "bolt-extension",
     "keywords": ["visual", "menu", "editor", "admin", "tool"],
     "require": {
@@ -9,7 +9,8 @@
     "authors": [
         {
             "name": "Steven Wüthrich / bacbos lab",
-            "email": "steven.wuethrich@me.com"
+            "email": "hello@bacbos.ch",
+            "homepage": "http://bacbos.ch"
         }
     ],
     "autoload": {
@@ -17,7 +18,7 @@
             "init.php"
         ],
         "psr-4": {
-            "MenuEditor\\": ""
+            "Bolt\\Extension\\bacboslab\\menueditor\\": ""
         }
     },
     "extra": {

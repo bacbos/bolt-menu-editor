@@ -58,10 +58,10 @@
 "Unable to save your menu.": "Impossibile salvare il menu."
 
 
-"Please make sure that the MenuEditor/backups folder is writeable by your webserver or disable the backup-feature in config.yml": "Assicurati di avere i permessi di scrittura sulla cartella MenuEditor/backups oppure disabilita il backup nel file config.yml"
+"Please make sure that the menueditor/backups folder is writeable by your webserver or disable the backup-feature in config.yml": "Assicurati di avere i permessi di scrittura sulla cartella menueditor/backups oppure disabilita il backup nel file config.yml"
 
-"Please make sure that there is a MenuEditor/backups folder or disable the backup-feature in config.yml": "Assicurati che sia presente la cartella MenuEditor/backups oppure disabilita il backup nel file config.yml"
+"Please make sure that there is a menueditor/backups folder or disable the backup-feature in config.yml": "Assicurati che sia presente la cartella menueditor/backups oppure disabilita il backup nel file config.yml"
 
 "There's something wrong with this extension, please report to the author and edit your menu manually until this is fixed.": "E' presente un errore nell'estensione, segnala all'autore e modifica il tuo menu manualmente fino a che non sarà corretto l'errore."
 
-"Unable to save backup! Please make sure MenuEditor/backups is writable by your webserver or disable the feature in the extensions configuration.": "Impossibile salvare il backup! Assicurati di avere i permessi di scrittura sulla cartella MenuEditor/backups oppure disabilita il backup nel file config.yml"
+"Unable to save backup! Please make sure menueditor/backups is writable by your webserver or disable the feature in the extensions configuration.": "Impossibile salvare il backup! Assicurati di avere i permessi di scrittura sulla cartella menueditor/backups oppure disabilita il backup nel file config.yml"
