@@ -105,6 +105,8 @@ class Extension extends \Bolt\BaseExtension
         /**
          * check if menu.yml is writable
          */
+        global $app;
+        $app['resources']->compat();
         $file = BOLT_CONFIG_DIR . '/menu.yml';
         if (@!is_readable($file) || !@is_writable($file)) {
             throw new \Exception(
