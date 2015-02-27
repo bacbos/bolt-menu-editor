@@ -1,5 +1,5 @@
 {
-    "name": "bacboslab/menueditor",
+    "name": "raistlfiren/bolt-menu-editor",
     "description": "A visual menu editor for Bolt CMS",
     "type": "bolt-extension",
     "keywords": ["visual", "menu", "editor", "admin", "tool"],
