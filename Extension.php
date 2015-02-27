@@ -23,6 +23,7 @@ class Extension extends \Bolt\BaseExtension
     private $authorized = false;
     private $backupDir;
     private $translationDir;
+    private $configDirectory;
 
     public  $config;
 
@@ -39,6 +40,7 @@ class Extension extends \Bolt\BaseExtension
      */
     public function initialize()
     {
+        $this->configDirectory = $this->app['paths']['config'];
         $this->config = $this->getConfig();
         $this->backupDir = __DIR__ .'/backups';
 
@@ -105,7 +107,7 @@ class Extension extends \Bolt\BaseExtension
         /**
          * check if menu.yml is writable
          */
-        $file = BOLT_CONFIG_DIR . '/menu.yml';
+        $file = $this->configDirectory . '/menu.yml';
         if (@!is_readable($file) || !@is_writable($file)) {
             throw new \Exception(
                 Trans::__("The file '%s' is not writable. You will have to use your own editor to make modifications to this file.",
@@ -166,7 +168,7 @@ class Extension extends \Bolt\BaseExtension
              */
             try {
                 if (
-                        $menus          = $this->app['request']->get('menus')
+                $menus          = $this->app['request']->get('menus')
                     &&  $writeLockToken = $this->app['request']->get('writeLock')
                 ){
 
@@ -362,7 +364,7 @@ class Extension extends \Bolt\BaseExtension
         }
 
         // try to save a backup
-        if (false === $justFetchList && !@copy(BOLT_CONFIG_DIR . '/menu.yml', $this->backupDir . '/menu.'. time() . '.yml'))
+        if (false === $justFetchList && !@copy($this->configDirectory . '/menu.yml', $this->backupDir . '/menu.'. time() . '.yml'))
         {
             throw new MenuEditorException($writeLock, 5);
         }
@@ -380,7 +382,7 @@ class Extension extends \Bolt\BaseExtension
             // make sure there's at least one backup file (first use...)
             if (count($backupFiles) == 0)
             {
-                if (!@copy(BOLT_CONFIG_DIR . '/menu.yml', $this->backupDir . '/menu.'. time() . '.yml')) {
+                if (!@copy($this->configDirectory . '/menu.yml', $this->backupDir . '/menu.'. time() . '.yml')) {
                     throw new MenuEditorException(Trans::__("Please make sure that the menueditor/backups folder is writeable by your webserver or disable the backup-feature in config.yml"));
                 }
                 return $this->backup(0, true);
@@ -420,7 +422,7 @@ class Extension extends \Bolt\BaseExtension
             if ($backupFiletime == $filetime)
             {
                 // try to overwrite menu.yml
-                if (@copy($this->backupDir . '/' . $backupFile, BOLT_CONFIG_DIR . '/menu.yml')) {
+                if (@copy($this->backupDir . '/' . $backupFile, $this->configDirectory . '/menu.yml')) {
                     return true;
                 }
 
