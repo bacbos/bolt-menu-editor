@@ -441,16 +441,13 @@ class Extension extends \Bolt\BaseExtension
     {
         $filename = __DIR__ . "/locales/readme_". substr($this->app['locale'], 0, 2) .".md";
         $fallback = __DIR__ . "/locales/readme_en.md";
-        $changelog = __DIR__ . "/changelog.md";
 
         if (!$readme = @file_get_contents($filename)) {
             $readme = file_get_contents($fallback);
         }
 
-        $changelog = file_get_contents($changelog);
-
         // Parse the field as Markdown, return HTML
-        return preg_replace("~h1~", "h3", \ParsedownExtra::instance()->text($readme) . \ParsedownExtra::instance()->text($changelog));
+        return preg_replace("~h1~", "h3", \ParsedownExtra::instance()->text($readme));
     }
 
     /**
