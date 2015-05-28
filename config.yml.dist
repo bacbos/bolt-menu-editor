@@ -3,6 +3,9 @@
 # available roles (by default): root, admin, developer, chief-editor, editor, guest, everyone
 permissions: [ admin, developer, chief-editor ]
 
+# either true, false or a list of roles that are allowed to edit the path of each menu item
+pathsEditable: false
+
 # creates a backup of your old menu.yml before saving
 # if you want to use this feature, make sure that the extension folder extensions/MenuEditor/backups is writable by your webserver
 enableBackups: true
