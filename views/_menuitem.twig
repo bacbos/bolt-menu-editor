@@ -14,7 +14,7 @@
         {% if item.link is not defined %}
             <div class="left-inner-addon">
                 <i class="fa fa-bolt"></i>
-                <input class="me-input form-control" type="text" value="{{ item.path }}" disabled="disabled" style="width: 80%;">
+                <input class="me-input form-control" type="text" value="{{ item.path }}" {% if pathsEditable %}data-tag="path"{% else %}disabled="disabled"{% endif %} style="width: 80%;">
             </div>
         {% endif %}
         <div class="left-inner-addon">
