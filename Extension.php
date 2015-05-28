@@ -21,6 +21,7 @@ class Extension extends \Bolt\BaseExtension
     private $dev = false;
 
     private $authorized = false;
+    private $authorizedForPaths = false;
     private $backupDir;
     private $translationDir;
     private $configDirectory;
@@ -67,6 +68,20 @@ class Extension extends \Bolt\BaseExtension
             if ($this->app['users']->hasRole($currentUserId, $role)) {
                 $this->authorized = true;
                 break;
+            }
+        }
+
+        // check if user can edit paths of menu items
+        if ($this->config['pathsEditable']) {
+            if (is_array($this->config['pathsEditable'])) {
+                foreach ($this->config['pathsEditable'] as $role) {
+                    if ($this->app['users']->hasRole($currentUserId, $role)) {
+                        $this->authorizedForPaths = true;
+                        break;
+                    }
+                }
+            } else {
+                $this->authorizedForPaths = true;
             }
         }
 
@@ -310,6 +325,7 @@ class Extension extends \Bolt\BaseExtension
             'contenttypes'  => $contenttypes,
             'taxonomys'     => $taxonomys,
             'menus'         => $menus,
+            'pathsEditable' => $this->authorizedForPaths,
             'writeLock'     => $writeLock,
             'backups'       => $backups,
             'readme'        => $this->getLocalizedReadme()
