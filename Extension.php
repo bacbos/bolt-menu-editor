@@ -53,6 +53,12 @@ class Extension extends \Bolt\BaseExtension
         } else {
             $this->config['permissions'][] = 'root';
         }
+        if (!isset($this->config['pathsEditable'])) {
+            $this->config['pathsEditable'] = false;
+        }
+        if (is_array($this->config['pathsEditable']) && !in_array('root', $this->config['pathsEditable'])) {
+            $this->config['pathsEditable'][] = 'root';
+        }
         if (!isset($this->config['enableBackups']) || !is_bool($this->config['enableBackups'])) {
             $this->config['enableBackups'] = false;
         }
