@@ -155,7 +155,7 @@ class Extension extends \Bolt\BaseExtension
                         unset($attributes['link']);
                     }
 
-                    $html = $this->app['render']->render('@MenuEditor/_menuitem.twig', array(
+                    $html = $this->app['twig']->render('@MenuEditor/_menuitem.twig', array(
                         'item' => $attributes
                     ));
 
