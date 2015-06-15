@@ -251,17 +251,27 @@ class Extension extends \Bolt\BaseExtension
                 if ($this->app['request']->get('action') == 'search-contenttypes') {
                     $ct = $this->app['request']->get('ct');
                     $q = $this->app['request']->get('meq');
-                    $retVal = Array();
+                    $retVal = array();
+
                     if (empty($ct)) {
                         $contenttypes = $this->app['config']->get('contenttypes');
                         foreach ($contenttypes as $ck => $contenttype) {
-                            $retVal[] = $this->app['storage']->getContent($contenttype['name'], array('title'=> "%$q%", 'slug'=>"%$q%", 'limit'=>100, 'order'=>'title'));
+                            $retVal[] = $this->app['storage']->getContent($contenttype['name'], array('title'=> "%$q%", 'limit'=>100, 'order'=>'title'));
+                            $retVal[] = $this->app['storage']->getContent($contenttype['name'], array('slug'=> "%$q%", 'limit'=>100, 'order'=>'slug'));
                         }
                     } else {
                         $retVal[] = $this->app['storage']->getContent($ct, array('title'=> "%$q%", 'limit'=>100, 'order'=>'title'));
+                        $retVal[] = $this->app['storage']->getContent($ct, array('slug'=> "%$q%", 'limit'=>100, 'order'=>'slug'));
                     }
 
-                    return $this->app->json(array('records' => $retVal));
+                    $results = array();
+                    foreach ($retVal as $val) {
+                        if (!empty($val)) {
+                            $results[] = $val;
+                        }
+                    }
+
+                    return $this->app->json(array('records' => $results));
                 }
             } catch (\Exception $e) {
 
