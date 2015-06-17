@@ -256,8 +256,12 @@ class Extension extends \Bolt\BaseExtension
                     if (empty($ct)) {
                         $contenttypes = $this->app['config']->get('contenttypes');
                         foreach ($contenttypes as $ck => $contenttype) {
-                            $retVal[] = $this->app['storage']->getContent($contenttype['name'], array('title'=> "%$q%", 'limit'=>100, 'order'=>'title'));
-                            $retVal[] = $this->app['storage']->getContent($contenttype['name'], array('slug'=> "%$q%", 'limit'=>100, 'order'=>'slug'));
+                            if (isset($contenttype['fields']['title'])) {
+                                $retVal[] = $this->app['storage']->getContent($contenttype['name'], array('title'=> "%$q%", 'limit'=>100, 'order'=>'title'));
+                            }
+                            if (isset($contenttype['fields']['slug'])) {
+                                $retVal[] = $this->app['storage']->getContent($contenttype['name'], array('slug'=> "%$q%", 'limit'=>100, 'order'=>'slug'));
+                            }
                         }
                     } else {
                         $retVal[] = $this->app['storage']->getContent($ct, array('title'=> "%$q%", 'limit'=>100, 'order'=>'title'));
