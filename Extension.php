@@ -304,7 +304,7 @@ class Extension extends \Bolt\BaseExtension
                 $prefix = $this->app['config']->get('general/database/prefix', "bolt_");
 
                 $taxonomytype = $tK;
-                $query = "select distinct `%staxonomy`.`slug` from `%staxonomy` where `taxonomytype` = ? order by `slug` asc;";
+                $query = "select distinct %staxonomy.slug from %staxonomy where taxonomytype = ? order by slug asc;";
                 $query = sprintf($query, $prefix, $prefix);
                 $query = $this->app['db']->executeQuery($query, array($taxonomytype));
 
