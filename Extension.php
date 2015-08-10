@@ -66,6 +66,15 @@ class Extension extends \Bolt\BaseExtension
             $this->config['keepBackups'] = 10;
         }
 
+        // Add our route
+        $this->path = $this->app['config']->get('general/branding/path') . '/extensions/menu-editor';
+        $this->app->match($this->path, array($this, 'MenuEditor'));
+
+        $this->app->before(array($this, 'before'));
+    }
+
+    public function before()
+    {
         // check if user has allowed role(s)
         $currentUser    = $this->app['users']->getCurrentUser();
         $currentUserId  = $currentUser['id'];
@@ -91,11 +100,10 @@ class Extension extends \Bolt\BaseExtension
             }
         }
 
+        // Add the menu item if someone has enough permission.
         if ($this->authorized)
         {
-
-            $this->path = $this->app['config']->get('general/branding/path') . '/extensions/menu-editor';
-            $this->app->match($this->path, array($this, 'MenuEditor'));
+            $this->addMenuOption(Trans::__('Menu editor'), $this->app['paths']['bolt'] . 'extensions/menu-editor', "fa:rocket");
 
             $this->translationDir = __DIR__.'/locales/' . substr($this->app['locale'], 0, 2);
 
@@ -111,9 +119,6 @@ class Extension extends \Bolt\BaseExtension
                     }
                 }
             }
-
-            $this->addMenuOption(Trans::__('Menu editor'), $this->app['paths']['bolt'] . 'extensions/menu-editor', "fa:rocket");
-
         }
     }
 
@@ -125,6 +130,10 @@ class Extension extends \Bolt\BaseExtension
      */
     public function MenuEditor()
     {
+        if (!$this->authorized) {
+            return new Response(Trans::__('Permission denied'), Response::HTTP_FORBIDDEN);
+        }
+
         /**
          * check if menu.yml is writable
          */
