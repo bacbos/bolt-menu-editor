@@ -41,9 +41,9 @@ class Extension extends \Bolt\BaseExtension
      */
     public function initialize()
     {
-        $this->configDirectory = $this->app['paths']['config'];
+        $this->configDirectory = $this->app['resources']->getPath('config');
         $this->config = $this->getConfig();
-        $this->backupDir = __DIR__ .'/backups';
+        $this->backupDir = __DIR__ . '/backups';
 
         /**
          * ensure proper config
@@ -103,7 +103,7 @@ class Extension extends \Bolt\BaseExtension
         // Add the menu item if someone has enough permission.
         if ($this->authorized)
         {
-            $this->addMenuOption(Trans::__('Menu editor'), $this->app['paths']['bolt'] . 'extensions/menu-editor', "fa:rocket");
+            $this->addMenuOption(Trans::__('Menu editor'), $this->app['resources']->getUrl('bolt') . 'extensions/menu-editor', 'fa:rocket');
 
             $this->translationDir = __DIR__.'/locales/' . substr($this->app['locale'], 0, 2);
 
@@ -372,10 +372,10 @@ class Extension extends \Bolt\BaseExtension
     {
 
         if ($this->dev) {
-            $urlbase = $this->app['paths']['extensions'] . 'local/bacboslab/menueditor/';
+            $urlbase = $this->app['resources']->getUrl('extensions') . 'local/bacboslab/menueditor/';
             $assets = '<script data-main="{urlbase}assets/app" src="{urlbase}assets/bower_components/requirejs/require.js"></script>';
         } else {
-            $urlbase = $this->app['paths']['extensions'] . 'vendor/bacboslab/menueditor/';
+            $urlbase = $this->app['resources']->getUrl('extensions') . 'vendor/bacboslab/menueditor/';
             //$assets = '<script src="{urlbase}assets/app.min.js"></script>';
 
             // current workaround for firefox issues [v 2.0.2]
