@@ -22,7 +22,9 @@
                     <li{% if loop.first %} class="active"{% endif %}><a href="javascript: null;" class="filter" data-filter="me-tab-{{ loop.index0 }}">{{ menu }}</a></li>
                     {% endfor %}
 
+                    {% if allowCreateNew %}
                     <li><a class="filter" data-filter="_add-new-menu"><i class="fa fa-plus"></i>&nbsp;</a></li>
+                    {% endif %}
 
                 </ul>
 

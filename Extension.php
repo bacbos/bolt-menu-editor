@@ -22,6 +22,7 @@ class Extension extends \Bolt\BaseExtension
 
     private $authorized = false;
     private $authorizedForPaths = false;
+    private $allowCreateNew = false;
     private $backupDir;
     private $translationDir;
     private $configDirectory;
@@ -53,6 +54,11 @@ class Extension extends \Bolt\BaseExtension
         } else {
             $this->config['permissions'][] = 'root';
         }
+        if (!isset($this->config['allowCreateNew']) || !is_array($this->config['allowCreateNew'])) {
+            $this->config['allowCreateNew'] = array('root', 'admin', 'developer');
+        } else {
+            $this->config['allowCreateNew'][] = 'root';
+        }
         if (!isset($this->config['pathsEditable'])) {
             $this->config['pathsEditable'] = false;
         }
@@ -82,6 +88,13 @@ class Extension extends \Bolt\BaseExtension
         foreach ($this->config['permissions'] as $role) {
             if ($this->app['users']->hasRole($currentUserId, $role)) {
                 $this->authorized = true;
+                break;
+            }
+        }
+        
+        foreach ($this->config['allowCreateNew'] as $role) {
+            if ($this->app['users']->hasRole($currentUserId, $role)) {
+                $this->allowCreateNew = true;
                 break;
             }
         }
@@ -351,13 +364,14 @@ class Extension extends \Bolt\BaseExtension
         }
 
         $body = $this->app['render']->render('@MenuEditor/base.twig', array(
-            'contenttypes'  => $contenttypes,
-            'taxonomys'     => $taxonomys,
-            'menus'         => $menus,
-            'pathsEditable' => $this->authorizedForPaths,
-            'writeLock'     => $writeLock,
-            'backups'       => $backups,
-            'readme'        => $this->getLocalizedReadme()
+            'contenttypes'   => $contenttypes,
+            'taxonomys'      => $taxonomys,
+            'menus'          => $menus,
+            'pathsEditable'  => $this->authorizedForPaths,
+            'writeLock'      => $writeLock,
+            'backups'        => $backups,
+            'allowCreateNew' => $this->allowCreateNew,
+            'readme'         => $this->getLocalizedReadme()
         ));
 
         return new Response($this->injectAssets($body));

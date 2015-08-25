@@ -3,6 +3,9 @@
 # available roles (by default): root, admin, developer, chief-editor, editor, guest, everyone
 permissions: [ admin, developer, chief-editor ]
 
+# user roles that are allowed to create new menus
+allowCreateNew: [ admin, developer, chief-editor ]
+
 # either true, false or a list of roles that are allowed to edit the path of each menu item
 pathsEditable: false
 
