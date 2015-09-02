@@ -153,6 +153,11 @@ class Extension extends \Bolt\BaseExtension
         }
 
         /**
+         * Make sure that no other extensions are interfering with the menueditor JS.
+         */
+        $this->clearAssets();
+
+        /**
          * check if menu.yml is writable
          */
         $file = $this->configDirectory . '/menu.yml';

@@ -4,7 +4,7 @@
     "type": "bolt-extension",
     "keywords": ["visual", "menu", "editor", "admin", "tool"],
     "require": {
-        "bolt/bolt": ">=2.0.0,<3.0.0"
+        "bolt/bolt": ">=2.2.10,<3.0.0"
     },
     "authors": [
         {
