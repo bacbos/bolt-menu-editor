@@ -354,8 +354,8 @@ class Extension extends \Bolt\BaseExtension
             }
 
             if (isset($taxonomy['behaves_like']) && 'categories' == $taxonomy['behaves_like']) {
-                foreach ($taxonomy['options'] as $option) {
-                    $taxonomys[$tK]['me_options'][$taxonomy['singular_slug'] .'/'. $option] = $option;
+                foreach ($taxonomy['options'] as $oK => $option) {
+                    $taxonomys[$tK]['me_options'][$taxonomy['singular_slug'] .'/'. $oK] = $option;
                 }
             }
 
