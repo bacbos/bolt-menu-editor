@@ -17,10 +17,18 @@
                 <input class="me-input form-control" type="text" value="{{ item.path }}" {% if pathsEditable|default(true) %}data-tag="path"{% else %}disabled="disabled"{% endif %} style="width: 80%;">
             </div>
         {% endif %}
+        {% for iso, locale in app.config.get('general/locales') %}
+        <div class="left-inner-addon"><span>{{locale.label}}</span>
+            <i class="fa fa-tag"></i>
+            <input class="me-input form-control" type="text" data-tag="{{loop.first ? '' : locale.slug}}label" value="{{ item[locale.slug~'label'] }}" placeholder="{{ __("label") }}">
+        </div>
+        {% endfor %}
+        {% if app.config.get('general/locales') is null %}
         <div class="left-inner-addon">
             <i class="fa fa-tag"></i>
             <input class="me-input form-control" type="text" data-tag="label" value="{{ item.label }}" placeholder="{{ __("label") }}">
         </div>
+        {% endif %}
         {% if item.link is defined %}
             <div class="left-inner-addon">
                 <i class="fa fa-link"></i>
