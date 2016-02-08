@@ -188,7 +188,8 @@ class Extension extends \Bolt\BaseExtension
                     }
 
                     $html = $this->app['twig']->render('@MenuEditor/_menuitem.twig', array(
-                        'item' => $attributes
+                        'item' => $attributes,
+                        'additional_fields' => $this->config['additional_fields']
                     ));
 
                     return $this->app->json(array('status' => 0, 'html' => $html));
@@ -374,14 +375,15 @@ class Extension extends \Bolt\BaseExtension
         }
 
         $body = $this->app['render']->render('@MenuEditor/base.twig', array(
-            'contenttypes'   => $contenttypes,
-            'taxonomys'      => $taxonomys,
-            'menus'          => $menus,
-            'pathsEditable'  => $this->authorizedForPaths,
-            'writeLock'      => $writeLock,
-            'backups'        => $backups,
-            'allowCreateNew' => $this->allowCreateNew,
-            'readme'         => $this->getLocalizedReadme()
+            'contenttypes'      => $contenttypes,
+            'taxonomys'         => $taxonomys,
+            'menus'             => $menus,
+            'pathsEditable'     => $this->authorizedForPaths,
+            'writeLock'         => $writeLock,
+            'backups'           => $backups,
+            'allowCreateNew'    => $this->allowCreateNew,
+            'readme'            => $this->getLocalizedReadme(),
+            'additional_fields' => $this->config['additional_fields']
         ));
 
         return new Response($this->injectAssets($body));
