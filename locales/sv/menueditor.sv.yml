@@ -25,6 +25,8 @@
 "View Readme": "Se manual"
 "Please choose": "Vänligen välj"
 "All content-types": "Alla innehållstyper"
+"label in": "Etikett på"
+"path": "Sökväg"
 
 #--
 # contenttypes (default bolt installation)
