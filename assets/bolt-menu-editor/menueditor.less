@@ -256,12 +256,42 @@
 
     input {
       padding-left: 30px;
+      margin: 6px 0;
+      width: 100%;
     }
 
     i {
       position: absolute;
-      padding: 13px 12px;
+      top: 50%;
+      -webkit-transform: translate(50%, -50%);
+              transform: translate(50%, -50%);
+      width: 18px;
+      text-align: center;
     }
+
+    label {
+        width: 100%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align:   center;
+        -webkit-align-items: center;
+            -ms-flex-align:  center;
+                align-items: center;
+        white-space: nowrap;
+        font-weight: normal;
+    }
+
+    span {
+        width: 140px;
+        -webkit-box-flex: 0;
+        -webkit-flex: 0 0 140px;
+            -ms-flex: 0 0 140px;
+                flex: 0 0 140px;
+        font-weight: normal;
+    }
+
   }
 
   #me-actionmenu li {
@@ -288,4 +318,3 @@
   button {
       margin-top: 8px;
   }
-
