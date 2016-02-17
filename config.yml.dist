@@ -14,7 +14,15 @@ pathsEditable: false
 enableBackups: true
 
 # Set alternative backups location, the path is relative to the web root.
-#backupsFolder: app/config/menu-backups
+backupsFolder: app/config/menu-backups
 
 # the last x backups will be kept
 keepBackups: 10
+
+# Define additional fields that will be available on all menuitems
+#additional_fields:
+#    additional_field1: 
+#        label: "additional field no1"
+#        icon: fa-tags
+#    additional_field2: 
+#        label: "additional field no2"
