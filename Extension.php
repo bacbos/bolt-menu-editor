@@ -323,10 +323,6 @@ class Extension extends \Bolt\BaseExtension
         $contenttypes   = $this->app['config']->get('contenttypes');
         $taxonomys      = $this->app['config']->get('taxonomy');
 
-        foreach ($contenttypes as $cK => $contenttype) {
-            $contenttypes[$cK]['records'] = $this->app['storage']->getContent($contenttype['name'], array());
-        }
-
         foreach ($taxonomys as $tK => $taxonomy)
         {
 
