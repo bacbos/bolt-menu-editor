@@ -14,7 +14,7 @@ pathsEditable: false
 enableBackups: true
 
 # Set alternative backups location, the path is relative to the web root.
-backupsFolder: app/config/menu-backups
+#backupsFolder: app/config/menu-backups
 
 # the last x backups will be kept
 keepBackups: 10

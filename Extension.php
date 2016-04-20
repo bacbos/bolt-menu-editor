@@ -48,7 +48,7 @@ class Extension extends \Bolt\BaseExtension
         if (!isset($this->config['backupsFolder'])) {
             $this->backupDir = __DIR__ . '/backups';
         } else {
-            $this->backupDir = $this->app['resources']->getPath('web') . $this->config['backupsFolder'];
+            $this->backupDir = $this->app['resources']->getPath('root') . $this->config['backupsFolder'];
         }
 
         /**
