@@ -66,24 +66,6 @@ class MenueditorExtension extends SimpleExtension
     /**
      * {@inheritdoc}
      */
-    protected function registerAssets()
-    {
-        $style = (new Stylesheet('menueditor.css'))
-            ->setZone(Zone::BACKEND);
-        $nestedSortable = (new JavaScript('jquery.mjs.nestedSortable.js'))
-            ->setZone(Zone::BACKEND);
-        $js = (new JavaScript('menueditor.js'))
-            ->setZone(Zone::BACKEND);
-        return [
-            $style,
-            $nestedSortable,
-            $js
-        ];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function getDefaultConfig()
     {
         return [
@@ -103,7 +85,21 @@ class MenueditorExtension extends SimpleExtension
      */
     public function menuEditor(Application $app, Request $request)
     {
+        $assets = [
+            new JavaScript('menueditor.js'),
+            new Stylesheet('menueditor.css'),
+            new JavaScript('jquery.mjs.nestedSortable.js')
+        ];
+
+        foreach ($assets as $asset) {
+            $asset->setZone(Zone::BACKEND);
+            $file = $this->getWebDirectory()->getFile($asset->getPath());
+            $asset->setPackageName('extensions')->setPath($file->getPath());
+            $app['asset.queue.file']->add($asset);
+        }
+
         $config = $this->getConfig();
+
         // Block unauthorized access...
         if (!$app['users']->isAllowed('files:config')) {
             throw new AccessDeniedException('Logged in user does not have the correct rights to use this route.');
