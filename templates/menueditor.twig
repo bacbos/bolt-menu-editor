@@ -1,0 +1,93 @@
+{% extends "_base/_page-nav.twig" %}
+
+{% block page_title __('Menueditor') %}
+{% block page_nav 'Settings/Extensions' %}
+
+{% macro menuitem(menuitem, id, config) %}
+    <li class="mjs-nestedSortable-expanded"{% for key, value in menuitem|merge(config.fields) if key not in ['submenu'] %}data-{{key}}="{{value}}"{% endfor %} id="menuitem-{{id}}">
+        <div>
+            <div class="flex-row">
+                <span title="Click to show/hide children" class="no-grow disclose"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                <span title="Click to show/hide item editor" class="no-grow expandEditor"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+                <span class="itemTitle">{{menuitem.label}}</span>
+                <span title="Click to delete item." class="no-grow deleteMenu"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+            </div>
+
+            <div class="form-horizontal editor" style="display:none;">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Label</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="label" name="label" value="{{menuitem.label}}">
+                    </div>
+                </div>
+                {% for key, value in menuitem|merge(config.fields) if key not in ['submenu', 'label'] %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">{{key|humanize}}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" placeholder="{{key}}" name="{{key}}" value="{{value}}">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <ol>
+            {% for submenuitem in menuitem.submenu %}
+                {% set id = id ~ '-' ~ loop.index %}
+                {{ _self.menuitem(submenuitem, id, config)}}
+            {% endfor %}
+        </ol>
+        
+    </li>
+{% endmacro %}
+
+{% block page_main %}
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="nav nav-tabs" role="tablist">
+                {% for name, menu in menus %}
+                    <li role="presentation" class="{{loop.first ? 'active'}}"><a href="#{{name}}" aria-controls="{{name}}" role="tab" data-toggle="tab">{{name}}</a></li>
+                {% endfor %}
+            </ul>
+
+            <div class="tab-content">
+                {% for name, menu in menus %}
+                    <div role="tabpanel" class="tab-pane {{loop.first ? 'active'}}" id="{{name}}">
+                        <ol class="sortable">
+                            {% for menuitem in menu %}
+                                {{ _self.menuitem(menuitem, loop.index, config)}}
+                            {% endfor %}
+                        </ol>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <aside class="col-md-4">
+            <form type="post" class="saveform" method="post">
+                <input type="hidden" name="menus" value="">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default">Save menu</button>
+                </div>
+            </form>
+            <h2>Add menu item</h2>
+            <form class="form-horizontal additem">
+                <div class="form-group">
+                    <label for="exampleInputEmail1" class="col-sm-2 control-label">Label</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="label (optional)" name="label">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1" class="col-sm-2 control-label">Link/Path</label>
+                    <div class="col-sm-10">
+                        <select class="js-data-example-ajax" name="link" style="width: 100%;">
+                            {% for item in items %}
+                                <option value="{{ item.link }}">{{item.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </aside>
+    </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+# Backup settings
+backups:
+    enable: true # Whether to enable backups or not
+    folder: 'config://extensions/menu_backups' # This has to be a filesystem path
+    keep: 10 # How many backups to keep
+
+# You can define fields in addition to the ones that already exist on menuitems.
+# These are key-value pairs of name and default value and will be added (with 
+# that default value) to all existing items that do not have that field yet.
+# You can not use the terms id, nestedSortableItem and nestedSortable-item.
+
+#fields:
+#    additional_field1: 'test'
+#    additional_field2: 'test'
