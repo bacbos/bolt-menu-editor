@@ -1,3 +1,10 @@
+function __(key) {
+    if(typeof menuEditorTranslations != 'undefined' && menuEditorTranslations[key]){
+        return menuEditorTranslations[key];
+    }
+    return key;
+}
+
 $().ready(function(){
     var ns = $('.sortable').nestedSortable({
         attribute: 'id',
@@ -79,7 +86,7 @@ $().ready(function(){
             return "\
             <div class='select2-result-repository clearfix'> \
                 <div class='select2-result-repository__title'> \
-                    Loading suggestions \
+                    "+__('menueditor.js.loading')+" \
                 </div> \
             </div>";
         }
@@ -99,7 +106,7 @@ $().ready(function(){
                 }
                 markup += "<div class='select2-result-repository__statistics'>"
                 if (record.newOption) {
-                    markup += "<div class='select2-result-repository__forks'><i class='fa fa-plus-circle'></i> New link to '" + record.link + "'</div>"
+                    markup += "<div class='select2-result-repository__forks'><i class='fa fa-plus-circle'></i> "+__('menueditor.js.newlink')+" '" + record.link + "'</div>"
                 } else {
                     markup += "<div class='select2-result-repository__forks'><i class='fa " + record.icon + "'></i> " + record.type + "</div>"
                 }
@@ -167,20 +174,20 @@ $().ready(function(){
         <li class="mjs-nestedSortable-expanded" id="menuitem-' + link + '" data-label="'+label+'" data-' + (link ? 'link' : 'path') + '="' + (link ? link : path) + '"> \
             <div> \
                 <div class="flex-row"> \
-                <span title="Click to show/hide children" class="no-grow disclose"><i class="fa fa-minus" aria-hidden="true"></i></span> \
-                <span title="Click to show/hide item editor" class="no-grow expandEditor"><i class="fa fa-chevron-down" aria-hidden="true"></i></span> \
+                <span title="'+__("menueditor.action.showhidechildren")+'" class="no-grow disclose"><i class="fa fa-minus" aria-hidden="true"></i></span> \
+                <span title="'+__("menueditor.action.showhideeditor")+'" class="no-grow expandEditor"><i class="fa fa-chevron-down" aria-hidden="true"></i></span> \
                     <span class="itemTitle">' + label + '</span> \
-                    <span title="Click to delete item." class="no-grow deleteMenu"><i class="fa fa-trash-o" aria-hidden="true"></i></span> \
+                    <span title="'+__("menueditor.action.delete")+'" class="no-grow deleteMenu"><i class="fa fa-trash-o" aria-hidden="true"></i></span> \
                 </div> \
                 <div class="form-horizontal editor"> \
                     <div class="form-group"> \
-                        <label class="col-sm-2 control-label">Label</label> \
+                        <label class="col-sm-2 control-label">'+__("menueditor.fields.label")+'</label> \
                         <div class="col-sm-10"> \
                             <input type="text" class="form-control" placeholder="label" name="label" value="' + label + '"> \
                         </div> \
                     </div> \
                     <div class="form-group"> \
-                        <label class="col-sm-2 control-label">'+ (link ? 'Link' : 'Path') +'</label> \
+                        <label class="col-sm-2 control-label">'+ (link ? __("menueditor.fields.link") : __("menueditor.fields.path")) +'</label> \
                         <div class="col-sm-10"> \
                             <input type="text" class="form-control" placeholder="'+ (link ? 'link' : 'path') +'" name="'+ (link ? 'link' : 'path') +'" value="'+ (link ? link : path) +'"> \
                         </div> \
