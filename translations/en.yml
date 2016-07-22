@@ -1,68 +1,50 @@
 #--
-# labels
+# Auth/permissions/menuitem/title
 #--
-"test.extension.trans": "TESTING"
-"Add new menu": "Lägg till ny meny"
-"Add to menu": "Lägg till i meny"
-"Close": "Stäng"
-"Contenttypes": "Innehållstyper"
-"css classes": "CSS klasser"
-"Generic": "Generisk"
-"label": "etikett"
-"Links": "Länkar"
-"Menu editor": "Menyredigerare"
-"Name of new menu": "Namn på ny meny"
-"no label set": "Ingen etikett inskriven"
-"Overview of all": "Översikt"
-"Remove from menu": "Ta bort från meny"
-"Restore menu.yml": "Återställ menu.yml"
-"Restore %filename%": "Återställ %filename%"
-"Revert changes": "Återställ ändringar"
-"Save": "Spara"
-"Select an item to add": "Välj ett objekt att lägga till"
-"Search for an item to add": "Sök efter ett objekt att lägga till"
-"Special elements": "Specialelement"
-"title": "titel"
-"View Readme": "Se manual"
-"Please choose": "Vänligen välj"
-"All content-types": "Alla innehållstyper"
-"label in": "Etikett på"
-"path": "Sökväg"
+menueditor.notallowed: "Logged in user does not have the correct rights to use this route."
+menueditor.title: "Menu editor"
+menueditor.menuitem: "Menu editor"
 
 #--
-# contenttypes (default bolt installation)
+# Flash messages
 #--
-"Entries": "Inlägg"
-"Kitchensinks": "Kitchensinks"
-"Pages": "Sidor"
-
-#--
-# messages
-#--
-"A menu with this name already exists...": "En meny med detta namn finns redan..."
-"Backup successfully restored": "Backupen har återställts"
-"Menu successfully saved": "Menyn har sparats"
-"Menus successfully saved": "Menyerna har sparats"
-"Please confirm that you wish to restore the menu": "Vänligen bekräfta att de vill återställa menyn"
-
-"Are you sure you want to revert changes you have made since you last saved your menus?": "Är du säker på att du vill återställa alla ändringar sedan du senast sparade menyerna?"
-
-"Are you sure you wish to remove this item from the menu, along with all its sub-items?": "Är du säker på att du vill ta bort denna menypunkten och alla dess undermenypunkter?"
-
-"The menu.yml config-file was edited by someone else in the meantime, please reload the page.": "Menu.yml filen blev redigerad av någon annan under tiden, vänligen ladda om sidan."
+menueditor.flash.saved: "The menus have been saved"
+menueditor.flash.error: "Menu couldn\'t be saved, we have restored it to it\'s last known good state."
+menueditor.flash.backup: 'Menu backup from %time% restored'
 
 #--
-# errors
+# Search
 #--
-"Something went wrong, please reload the page and try again": "Något blev fel, vänligen ladda om sidan och försök igen."
-"The backup could not be restored: ": "Backupen kunde inte återställas: "
-"Unable to overwrite menu.yml": "Kunde inte skriva över menu.yml"
-"Unable to save your menu.": "Kunde inte spara din meny."
+menueditor.search.taxonomy: "Taxonomy"
+menueditor.search.overview: "Overview"
 
-"Please make sure that the menueditor/backups folder is writeable by your webserver or disable the backup-feature in config.yml": "Vänligen se till att menueditor/backups mappen är skrivbar eller deaktivera backupfunktionen in config.yml"
+#--
+# Actions
+#--
+menueditor.actions.save: "Save menus"
+menueditor.actions.showhidechildren: "Click to show/hide children"
+menueditor.action.showhideeditor: "Click to show/hide item editor"
+menueditor.action.delete: "Click to delete item."
+menueditor.actions.add: "Add menu item"
+menueditor.actions.restorebackups: "Restore backups"
 
-"Please make sure that there is a menueditor/backups folder or disable the backup-feature in config.yml": "Vänligen se till att menueditor/backups mappen existerar eller deaktivera backupfunktionen in config.yml"
+#--
+# Fields
+#--
+menueditor.fields.label: "Label"
+menueditor.fields.link: "Link"
+menueditor.fields.path: "Path"
 
-"There's something wrong with this extension, please report to the author and edit your menu manually until this is fixed.": "Det har uppstått ett fel med tillägget, vänligen kontakta utvecklaren."
+#--
+# Backups
+#--
+menueditor.backups.from: "From"
+menueditor.backups.date: "Date"
+menueditor.backups.restore: "Restore"
+menueditor.backups.nobackups: "No backups yet, backups are created automatically when you save the menu."
 
-"Unable to save backup! Please make sure menueditor/backups is writable by your webserver or disable the feature in the extensions configuration.": "Kunde inte spara backupen! Vänligen se till att menueditor/backups mappen är skrivbar eller deaktivera backupfunktionen in config.yml"
+#--
+# JS translations
+#--
+menueditor.js.loading: "Loading suggestions"
+menueditor.js.newlink: "New link to"

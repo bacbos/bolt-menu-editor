@@ -45,7 +45,7 @@ class MenueditorExtension extends SimpleExtension
     protected function registerMenuEntries()
     {
         $menu = new MenuEntry('extend/menueditor', 'menueditor');
-        $menu->setLabel('Menu Editor')
+        $menu->setLabel(Trans::__('menueditor.menuitem'))
             ->setIcon('fa:bars')
             ->setPermission('files:config');
 
@@ -103,7 +103,7 @@ class MenueditorExtension extends SimpleExtension
         
         // Block unauthorized access...
         if (!$app['users']->isAllowed('files:config')) {
-            throw new AccessDeniedException('Logged in user does not have the correct rights to use this route.');
+            throw new AccessDeniedException(Trans::__('menueditor.notallowed'));
         }
 
         // Handle posted menus
@@ -121,7 +121,7 @@ class MenueditorExtension extends SimpleExtension
                 $parser->parse($yaml);
             } catch (\Exception $e) {
                 // Don't save menufile if we got a json on yaml error
-                $app['logger.flash']->error('Menu couldn\'t be saved, we have restored it to it\'s last known good state.');
+                $app['logger.flash']->error(Trans::__('menueditor.flash.error'));
                 return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
             }
             // Handle backups
@@ -138,22 +138,31 @@ class MenueditorExtension extends SimpleExtension
             }
             // Save menu file
             $app['filesystem']->getFile('config://menu.yml')->put($yaml);
-            // We use the success flash to test the extension translation feature, will replace as soon as it's gtg
-            $app['logger.flash']->success(Trans::__('test.extension.trans'));
+            $app['logger.flash']->success(Trans::__('menueditor.flash.saved'));
             return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
         }
         // Handle restoring backups
         if ($request->get('backup')) {
             $backup = $app['filesystem']->get($config['backups']['folder'])->get($request->get('backup'));
             $app['filesystem']->put('config://menu.yml', $backup->read());
-            $app['logger.flash']->success('Menu backup from ' . $backup->getCarbon()->diffForHumans() . ' restored');
+            $app['logger.flash']->success(Trans::__('menueditor.flash.backup', ['%time%' => $backup->getCarbon()->diffForHumans()]));
             return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
         }
 
         // Get data and render backend view
         $data = [
             'menus' => $app['config']->get('menu'),
-            'config' => $config
+            'config' => $config,
+            'JsTranslations' => json_encode([
+                'menueditor.js.loading' => Trans::__('menueditor.js.loading'),
+                'menueditor.js.newlink' => Trans::__('menueditor.js.newlink'),
+                'menueditor.actions.showhidechildren' => Trans::__('menueditor.actions.showhidechildren'),
+                'menueditor.action.showhideeditor' => Trans::__('menueditor.action.showhideeditor'),
+                'menueditor.action.delete' => Trans::__('menueditor.action.delete'),
+                'menueditor.fields.label' => Trans::__('menueditor.fields.label'),
+                'menueditor.fields.link' => Trans::__('menueditor.fields.link'),
+                'menueditor.fields.path' => Trans::__('menueditor.fields.path')
+            ])
         ];
 
         if($config['backups']['enable']){
@@ -175,7 +184,7 @@ class MenueditorExtension extends SimpleExtension
     {
         //Block unauthorized access...
         if (!$app['users']->isAllowed('files:config')) {
-            throw new AccessDeniedException('Logged in user does not have the correct rights to use this route.');
+            throw new AccessDeniedException(Trans::__('menueditor.notallowed'));
         }
 
         $query = $app['request']->get('q');
@@ -202,7 +211,7 @@ class MenueditorExtension extends SimpleExtension
                     'link' => $ct['slug'],
                     'id' => $ct['slug'],
                     'title' => $ct['name'],
-                    'type' => 'Overview',
+                    'type' => Trans::__('menueditor.search.overview'),
                     'icon' => str_replace(':', '-', $ct['icon_many'])
                 ];
             }
@@ -217,7 +226,7 @@ class MenueditorExtension extends SimpleExtension
                             'link' => $tax['slug'] . '/' . $key,
                             'id' => $tax['slug'] . '/' . $key,
                             'title' => $taxOpt,
-                            'type' => $tax['name'] . ' (Taxonomy)',
+                            'type' => $tax['name'] . ' ('.Trans::__('menueditor.search.taxonomy').')',
                             'icon' => str_replace(':', '-', $tax['icon_one'])
                         ];
                     }
@@ -242,7 +251,7 @@ class MenueditorExtension extends SimpleExtension
                         'link' => $tax['slug'] . '/' . $result['slug'],
                         'id' => $tax['slug'] . '/' . $result['slug'],
                         'title' => $result['name'],
-                        'type' => $tax['name'] . ' (Taxonomy)',
+                        'type' => $tax['name'] . ' ('.Trans::__('menueditor.search.taxonomy').')',
                         'icon' => str_replace(':', '-', $tax['icon_one'])
                     ];
                 }
