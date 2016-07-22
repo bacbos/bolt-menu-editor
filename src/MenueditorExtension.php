@@ -145,7 +145,7 @@ class MenueditorExtension extends SimpleExtension
             $backup = $app['filesystem']->get($config['backups']['folder'])->get($request->get('backup'));
             $app['filesystem']->put('config://menu.yml', $backup->read());
             $app['logger.flash']->success('Menu backup from ' . $backup->getCarbon()->diffForHumans() . ' restored');
-            //return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
+            return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
         }
 
         // Get data and render backend view
@@ -216,9 +216,33 @@ class MenueditorExtension extends SimpleExtension
                             'id' => $tax['slug'] . '/' . $key,
                             'title' => $taxOpt,
                             'type' => $tax['name'] . ' (Taxonomy)',
-                            'icon' => str_replace(':', '-', $ct['icon_many'])
+                            'icon' => str_replace(':', '-', $tax['icon_one'])
                         ];
                     }
+                }
+            }else{
+                $prefix = $app['config']->get('general/database/prefix', 'bolt_');
+                $tablename = $prefix . "taxonomy";
+                $slug = $tax['slug'];
+                $taxquery = '%'.$query.'%';
+                $taxonomyQuery = "SELECT COUNT(name) as count, slug, name 
+                                  FROM $tablename
+                                  WHERE taxonomytype IN ('$slug')
+                                  AND (slug LIKE ? OR name LIKE ?)
+                                  GROUP BY name, slug, sortorder 
+                                  ORDER BY count";
+                $stmt = $app['db']->prepare($taxonomyQuery);
+                $stmt->bindValue(1, $taxquery);
+                $stmt->bindValue(2, $taxquery);
+                $stmt->execute();
+                foreach ($stmt->fetchAll() as $result) {
+                    $items[] = [
+                        'link' => $tax['slug'] . '/' . $result['slug'],
+                        'id' => $tax['slug'] . '/' . $result['slug'],
+                        'title' => $result['name'],
+                        'type' => $tax['name'] . ' (Taxonomy)',
+                        'icon' => str_replace(':', '-', $tax['icon_one'])
+                    ];
                 }
             }
         }
