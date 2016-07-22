@@ -46,7 +46,7 @@ $().ready(function(){
 
     $('.saveform').submit(function(e){
         var menus = {}
-        $('.tab-pane').each(function(elem){
+        $('.menus .tab-pane').each(function(elem){
             var menu = $(this).find('ol.sortable').nestedSortable('toHierarchy', {startDepthCount: 0});
             menu = clean(menu);
             menus[$(this).attr('id')] = menu;

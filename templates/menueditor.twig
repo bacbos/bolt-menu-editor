@@ -4,7 +4,7 @@
 <form type="post" class="saveform" method="post">
     <input type="hidden" name="menus" value="">
     <div class="form-group">
-        <button type="submit" class="btn btn-success">Save menus <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+        <button type="submit" class="btn btn-success" data-content="Save menus"> <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
     </div>
 </form>
 {{ __('Menueditor')}} 
@@ -50,7 +50,7 @@
 
 {% block page_main %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 menus">
             <ul class="nav nav-tabs" role="tablist">
                 {% for name, menu in menus %}
                     <li role="presentation" class="{{loop.first ? 'active'}}"><a href="#{{name}}" aria-controls="{{name}}" role="tab" data-toggle="tab">{{name}}</a></li>
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <aside class="col-md-4">
+        <aside class="col-md-4 sidebar">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#add-menu-item" aria-controls="add-menu-item" role="tab" data-toggle="tab">Add menu item</a></li>
                 {% if config.backups.enable %}

@@ -111,6 +111,13 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 .saveform {
     float: right;
 }
+.saveform button:before{
+    content: attr(data-content);
+}
 .saveform .fa {
     margin-left: 3px;
+}
+
+.sidebar .table>tbody>tr>th {
+    border-top: 0px;
 }
