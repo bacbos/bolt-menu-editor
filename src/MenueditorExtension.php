@@ -9,6 +9,7 @@ use Bolt\Asset\File\JavaScript;
 use Bolt\Asset\File\Stylesheet;
 use Bolt\Extension\SimpleExtension;
 use Bolt\Routing\ControllerCollection;
+use Bolt\Translation\Translator as Trans;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -114,7 +115,7 @@ class MenueditorExtension extends SimpleExtension
                     throw new \Exception('JSON Error');
                 }
                 $dumper = new Dumper();
-                $dumper->setIndentation(2);
+                $dumper->setIndentation(4);
                 $yaml = $dumper->dump($menus, 9999);
                 $parser = new Parser();
                 $parser->parse($yaml);
@@ -137,7 +138,8 @@ class MenueditorExtension extends SimpleExtension
             }
             // Save menu file
             $app['filesystem']->getFile('config://menu.yml')->put($yaml);
-            $app['logger.flash']->success('Menu saved');
+            // We use the success flash to test the extension translation feature, will replace as soon as it's gtg
+            $app['logger.flash']->success(Trans::__('test.extension.trans'));
             return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
         }
         // Handle restoring backups
