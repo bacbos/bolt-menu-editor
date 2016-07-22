@@ -97,9 +97,9 @@ class MenueditorExtension extends SimpleExtension
             $asset->setPackageName('extensions')->setPath($file->getPath());
             $app['asset.queue.file']->add($asset);
         }
-
+        
         $config = $this->getConfig();
-
+        
         // Block unauthorized access...
         if (!$app['users']->isAllowed('files:config')) {
             throw new AccessDeniedException('Logged in user does not have the correct rights to use this route.');
@@ -140,12 +140,24 @@ class MenueditorExtension extends SimpleExtension
             $app['logger.flash']->success('Menu saved');
             return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
         }
+        // Handle restoring backups
+        if ($request->get('backup')) {
+            $backup = $app['filesystem']->get($config['backups']['folder'])->get($request->get('backup'));
+            $app['filesystem']->put('config://menu.yml', $backup->read());
+            $app['logger.flash']->success('Menu backup from ' . $backup->getCarbon()->diffForHumans() . ' restored');
+            //return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
+        }
 
         // Get data and render backend view
         $data = [
             'menus' => $app['config']->get('menu'),
             'config' => $config
         ];
+
+        if($config['backups']['enable']){
+            $data['backups'] = $app['filesystem']->listContents($config['backups']['folder']);
+        }
+
         $html = $this->renderTemplate("menueditor.twig", $data);
         return new Response($html);
     }
