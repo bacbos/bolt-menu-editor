@@ -1,22 +1,25 @@
 ol.sortable,
 ol.sortable ol {
     list-style-type: none;
+    padding-left: 36px;
 }
 ol.sortable {
     padding: 0px;
 }
 .itemTitle {
     cursor: move;
-    flex-grow: 1;
+    -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+            flex-grow: 1;
+    margin: 0 7px;
 }
 .sortable li > div {
-    border: 1px solid #d4d4d4;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
     border-color: #D4D4D4 #D4D4D4 #BCBCBC;
-    margin: 4px;
-    padding: 4px;
+    margin-bottom: 8px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
 }
 li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     border-color: #999;
@@ -25,7 +28,6 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 .expandEditor,
 .deleteMenu {
     cursor: pointer;
-    width: 20px;
 }
 .sortable li.mjs-nestedSortable-collapsed > ol {
     display: none;
@@ -40,7 +42,9 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 }
 .editor {
     width: 100%;
-    padding: 0 20px;
+    padding: 0 20px 7px 20px;
+    border-top: 1px solid #b3b3b3;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
 }
 .editor .menulabel {
     white-space: nowrap;
@@ -50,11 +54,22 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     width: 99%;
 }
 .flex-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     width: 100%;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
 }
 .no-grow {
-    flex-grow: 0;
+    -webkit-box-flex: 0;
+        -ms-flex-positive: 0;
+            flex-grow: 0;
+    width: 36px;
+    text-align: center;
+    padding: 6px 11px;
+    border-right: 1px solid #b3b3b3;
 }
 .select2-result-repository {
     padding-top: 4px;
@@ -99,10 +114,7 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 .select2-results__option--highlighted .select2-result-repository__title {
     color: white;
 }
-.select2-results__option--highlighted .select2-result-repository__forks,
-.select2-results__option--highlighted .select2-result-repository__stargazers,
-.select2-results__option--highlighted .select2-result-repository__description,
-.select2-results__option--highlighted .select2-result-repository__watchers {
+.select2-results__option--highlighted .select2-result-repository__forks {
     color: #c6dcef;
 }
 .select2-container--default .select2-results>.select2-results__options {
@@ -120,4 +132,13 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 
 .sidebar .table>tbody>tr>th {
     border-top: 0px;
+}
+
+.sortable {
+    margin-top: 8px;
+}
+
+.no-grow:last-child {
+    border-left: 1px solid #b3b3b3;
+    border-right: 0;
 }
