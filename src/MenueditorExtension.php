@@ -107,7 +107,7 @@ class MenueditorExtension extends SimpleExtension
             try {
                 $menus = json_decode($request->get('menus'), true);
                 // Throw JSON error if we couldn't decode it
-                if(json_last_error() !== 0){
+                if (json_last_error() !== 0) {
                     throw new \Exception('JSON Error');
                 }
                 $dumper = new Dumper();
@@ -121,14 +121,14 @@ class MenueditorExtension extends SimpleExtension
                 return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
             }
             // Handle backups
-            if($config['backups']['enable']){
+            if ($config['backups']['enable']) {
                 $app['filesystem']->createDir($config['backups']['folder']);
                 // Create new backup
                 $backup = $dumper->dump($app['config']->get('menu'), 9999);
                 $app['filesystem']->put($config['backups']['folder'].'/menu.' . time() . '.yml', $backup);
                 // Delete oldest backup if we have too many
                 $backups = $app['filesystem']->listContents($config['backups']['folder']);
-                if(count($backups) > $config['backups']['keep']){
+                if (count($backups) > $config['backups']['keep']) {
                     reset($backups)->delete();
                 }
             }
@@ -161,7 +161,7 @@ class MenueditorExtension extends SimpleExtension
             ])
         ];
 
-        if($config['backups']['enable']){
+        if ($config['backups']['enable']) {
             $data['backups'] = $app['filesystem']->listContents($config['backups']['folder']);
         }
 
@@ -202,7 +202,7 @@ class MenueditorExtension extends SimpleExtension
 
         // Check contenttype listings
         foreach ($app['config']->get('contenttypes') as $ct) {
-            if((!isset($ct['viewless']) || $ct['viewless'] === false) && (stripos($ct['slug'], $query) !== false || stripos($ct['name'], $query))){
+            if ((!isset($ct['viewless']) || $ct['viewless'] === false) && (stripos($ct['slug'], $query) !== false || stripos($ct['name'], $query))) {
                 $items[] = [
                     'link' => $ct['slug'],
                     'id' => $ct['slug'],
@@ -215,9 +215,9 @@ class MenueditorExtension extends SimpleExtension
 
         // Check taxonomy listings
         foreach ($app['config']->get('taxonomy') as $tax) {
-            if(isset($tax['options'])){
+            if (isset($tax['options'])) {
                 foreach ($tax['options'] as $key => $taxOpt) {
-                    if(stripos($taxOpt, $query) || stripos($key, $query)){
+                    if (stripos($taxOpt, $query) || stripos($key, $query)) {
                         $items[] = [
                             'link' => $tax['slug'] . '/' . $key,
                             'id' => $tax['slug'] . '/' . $key,
@@ -227,7 +227,7 @@ class MenueditorExtension extends SimpleExtension
                         ];
                     }
                 }
-            }else{
+            } else {
                 $prefix = $app['config']->get('general/database/prefix', 'bolt_');
                 $tablename = $prefix . "taxonomy";
                 $slug = $tax['slug'];
