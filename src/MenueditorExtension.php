@@ -56,7 +56,10 @@ class MenueditorExtension extends SimpleExtension
     protected function registerTwigPaths()
     {
         return [
-            'templates' => ['position' => 'prepend', 'namespace' => 'bolt']
+            'templates' => [
+                'position' => 'prepend',
+                'namespace' => 'bolt'
+            ]
         ];
     }
 
@@ -189,14 +192,14 @@ class MenueditorExtension extends SimpleExtension
         $items = [];
         foreach ($search['results'] as $record) {
             $items[] = [
-                'title' => $record->getTitle(),
-                'image' => $record->getImage() ?: '',
-                'body' => (String)$record->getExcerpt(100),
-                'link' => $record->link(),
+                'title'       => $record->getTitle(),
+                'image'       => $record->getImage() ?: '',
+                'body'        => (String)$record->getExcerpt(100),
+                'link'        => $record->link(),
                 'contenttype' => $record->contenttype['singular_slug'],
-                'type' => $record->contenttype['singular_name'],
-                'icon' => str_replace(':', '-', $record->contenttype['icon_one']),
-                'id' => $record->id
+                'type'        => $record->contenttype['singular_name'],
+                'icon'        => str_replace(':', '-', $record->contenttype['icon_one']),
+                'id'          => $record->id
             ];
         }
 
@@ -204,11 +207,11 @@ class MenueditorExtension extends SimpleExtension
         foreach ($app['config']->get('contenttypes') as $ct) {
             if ((!isset($ct['viewless']) || $ct['viewless'] === false) && (stripos($ct['slug'], $query) !== false || stripos($ct['name'], $query))) {
                 $items[] = [
-                    'link' => $ct['slug'],
-                    'id' => $ct['slug'],
+                    'link'  => $ct['slug'],
+                    'id'    => $ct['slug'],
                     'title' => $ct['name'],
-                    'type' => Trans::__('menueditor.search.overview'),
-                    'icon' => str_replace(':', '-', $ct['icon_many'])
+                    'type'  => Trans::__('menueditor.search.overview'),
+                    'icon'  => str_replace(':', '-', $ct['icon_many'])
                 ];
             }
         }
@@ -219,11 +222,11 @@ class MenueditorExtension extends SimpleExtension
                 foreach ($tax['options'] as $key => $taxOpt) {
                     if (stripos($taxOpt, $query) || stripos($key, $query)) {
                         $items[] = [
-                            'link' => $tax['slug'] . '/' . $key,
-                            'id' => $tax['slug'] . '/' . $key,
+                            'link'  => $tax['slug'] . '/' . $key,
+                            'id'    => $tax['slug'] . '/' . $key,
                             'title' => $taxOpt,
-                            'type' => $tax['name'] . ' ('.Trans::__('menueditor.search.taxonomy').')',
-                            'icon' => str_replace(':', '-', $tax['icon_one'])
+                            'type'  => $tax['name'] . ' ('.Trans::__('menueditor.search.taxonomy').')',
+                            'icon'  => str_replace(':', '-', $tax['icon_one'])
                         ];
                     }
                 }
@@ -244,11 +247,11 @@ class MenueditorExtension extends SimpleExtension
                 $stmt->execute();
                 foreach ($stmt->fetchAll() as $result) {
                     $items[] = [
-                        'link' => $tax['slug'] . '/' . $result['slug'],
-                        'id' => $tax['slug'] . '/' . $result['slug'],
+                        'link'  => $tax['slug'] . '/' . $result['slug'],
+                        'id'    => $tax['slug'] . '/' . $result['slug'],
                         'title' => $result['name'],
-                        'type' => $tax['name'] . ' ('.Trans::__('menueditor.search.taxonomy').')',
-                        'icon' => str_replace(':', '-', $tax['icon_one'])
+                        'type'  => $tax['name'] . ' ('.Trans::__('menueditor.search.taxonomy').')',
+                        'icon'  => str_replace(':', '-', $tax['icon_one'])
                     ];
                 }
             }
