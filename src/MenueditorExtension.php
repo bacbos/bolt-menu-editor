@@ -15,12 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-
 use Symfony\Component\HttpFoundation\RedirectResponse;
-
-class MenuEditorException extends \Exception {};
 
 /**
  * Menueditor extension class.
@@ -78,11 +74,11 @@ class MenueditorExtension extends SimpleExtension
     }
 
     /**
-     * Menueditor controller
+     * Menueditor route
      *
      * @param  Application $app
      * @param  Request $request
-     * @return Response
+     * @return Response|RedirectResponse
      */
     public function menuEditor(Application $app, Request $request)
     {
@@ -154,14 +150,14 @@ class MenueditorExtension extends SimpleExtension
             'menus' => $app['config']->get('menu'),
             'config' => $config,
             'JsTranslations' => json_encode([
-                'menueditor.js.loading' => Trans::__('menueditor.js.loading'),
-                'menueditor.js.newlink' => Trans::__('menueditor.js.newlink'),
+                'menueditor.js.loading'               => Trans::__('menueditor.js.loading'),
+                'menueditor.js.newlink'               => Trans::__('menueditor.js.newlink'),
                 'menueditor.actions.showhidechildren' => Trans::__('menueditor.actions.showhidechildren'),
-                'menueditor.action.showhideeditor' => Trans::__('menueditor.action.showhideeditor'),
-                'menueditor.action.delete' => Trans::__('menueditor.action.delete'),
-                'menueditor.fields.label' => Trans::__('menueditor.fields.label'),
-                'menueditor.fields.link' => Trans::__('menueditor.fields.link'),
-                'menueditor.fields.path' => Trans::__('menueditor.fields.path')
+                'menueditor.action.showhideeditor'    => Trans::__('menueditor.action.showhideeditor'),
+                'menueditor.action.delete'            => Trans::__('menueditor.action.delete'),
+                'menueditor.fields.label'             => Trans::__('menueditor.fields.label'),
+                'menueditor.fields.link'              => Trans::__('menueditor.fields.link'),
+                'menueditor.fields.path'              => Trans::__('menueditor.fields.path')
             ])
         ];
 
@@ -174,11 +170,11 @@ class MenueditorExtension extends SimpleExtension
     }
 
     /**
-     * Menueditor search controller
+     * Menueditor search route
      *
      * @param  Application $app
      * @param  Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function menuEditorSearch(Application $app, Request $request)
     {
@@ -187,7 +183,7 @@ class MenueditorExtension extends SimpleExtension
             throw new AccessDeniedException(Trans::__('menueditor.notallowed'));
         }
 
-        $query = $app['request']->get('q');
+        $query = $request->get('q');
         // Do a normal search
         $search = $app['storage']->searchContent($query);
         $items = [];
