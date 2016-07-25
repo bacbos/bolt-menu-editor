@@ -148,7 +148,7 @@ class MenueditorExtension extends SimpleExtension
         // Get data and render backend view
         $data = [
             'menus' => $app['config']->get('menu'),
-            'config' => $config,
+            'menu_config' => $config,
             'JsTranslations' => json_encode([
                 'menueditor.js.loading'               => Trans::__('menueditor.js.loading'),
                 'menueditor.js.newlink'               => Trans::__('menueditor.js.newlink'),
@@ -165,7 +165,7 @@ class MenueditorExtension extends SimpleExtension
             $data['backups'] = $app['filesystem']->listContents($config['backups']['folder']);
         }
 
-        $html = $this->renderTemplate("menueditor.twig", $data);
+        $html = $app['twig']->render("@bolt/menueditor.twig", $data);
         return new Response($html);
     }
 
