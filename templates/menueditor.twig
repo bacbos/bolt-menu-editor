@@ -11,8 +11,8 @@
 {% endblock %}
 {% block page_nav 'Settings/Extensions' %}
 
-{% macro menuitem(menuitem, id, config) %}
-    <li class="mjs-nestedSortable-expanded"{% for key, value in menuitem|merge(config.fields) if key not in ['submenu'] %}data-{{key}}="{{value}}"{% endfor %} id="menuitem-{{id}}">
+{% macro menuitem(menuitem, id, menu_config) %}
+    <li class="mjs-nestedSortable-expanded"{% for key, value in menuitem|merge(menu_config.fields) if key not in ['submenu'] %}data-{{key}}="{{value}}"{% endfor %} id="menuitem-{{id}}">
         <div>
             <div class="flex-row">
                 <span title="{{ __('menueditor.action.showhidechildren')}}" class="no-grow disclose"><i class="fa fa-minus" aria-hidden="true"></i></span>
@@ -28,7 +28,7 @@
                         <input type="text" class="form-control" placeholder="{{ __('menueditor.fields.label')}}" name="label" value="{{menuitem.label}}">
                     </div>
                 </div>
-                {% for key, value in menuitem|merge(config.fields) if key not in ['submenu', 'label'] %}
+                {% for key, value in menuitem|merge(menu_config.fields) if key not in ['submenu', 'label'] %}
                     <div class="form-group">
                         <label class="col-sm-2 control-label">{{__(key)|humanize}}</label>
                         <div class="col-sm-10">
@@ -39,9 +39,9 @@
             </div>
         </div>
         <ol>
-            {% for submenuitem in menuitem.submenu %}
+            {% for submenuitem in menuitem.submenu|default([]) %}
                 {% set id = id ~ '-' ~ loop.index %}
-                {{ _self.menuitem(submenuitem, id, config)}}
+                {{ _self.menuitem(submenuitem, id, menu_config)}}
             {% endfor %}
         </ol>
         
@@ -62,7 +62,7 @@
                     <div role="tabpanel" class="tab-pane {{loop.first ? 'active'}}" id="{{name}}">
                         <ol class="sortable">
                             {% for menuitem in menu %}
-                                {{ _self.menuitem(menuitem, loop.index, config)}}
+                                {{ _self.menuitem(menuitem, loop.index, menu_config)}}
                             {% endfor %}
                         </ol>
                     </div>
@@ -73,7 +73,7 @@
         <aside class="col-md-4 sidebar">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#add-menu-item" aria-controls="add-menu-item" role="tab" data-toggle="tab">{{ __('menueditor.actions.add')}}</a></li>
-                {% if config.backups.enable %}
+                {% if menu_config.backups.enable %}
                     <li role="presentation" class=""><a href="#restore-backups" aria-controls="restore-backups" role="tab" data-toggle="tab">{{ __('menueditor.actions.restorebackups')}}</a></li>
                 {% endif %}
             </ul>
@@ -90,7 +90,7 @@
                             <label for="exampleInputPassword1" class="col-sm-4 control-label">{{ __('menueditor.fields.link')}}/{{ __('menueditor.fields.path')}}</label>
                             <div class="col-sm-8">
                                 <select class="js-data-example-ajax" name="link" style="width: 100%;">
-                                    {% for item in items %}
+                                    {% for item in items|default([]) %}
                                         <option value="{{ item.link }}">{{item.name}}</option>
                                     {% endfor %}
                                 </select>
@@ -98,7 +98,7 @@
                         </div>
                     </form>
                 </div>
-                {% if config.backups.enable %}
+                {% if menu_config.backups.enable %}
                     <div role="tabpanel" class="tab-pane" id="restore-backups">
                         {% if backups %}
                             <table class="table">
