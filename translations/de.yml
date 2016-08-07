@@ -1,0 +1,50 @@
+#--
+# Auth/permissions/menuitem/title
+#--
+menueditor.notallowed: "Angemeldeter Benutzer verfügt nicht über die nötigen Zugriffsrechte."
+menueditor.title: "Menu-Editor"
+menueditor.menuitem: "Menu-Editor"
+
+#--
+# Flash messages
+#--
+menueditor.flash.saved: "Die Menüs wurden gespeichert"
+menueditor.flash.error: "Menü konnte nicht gespeichert werden, es wurde auf den letzten funktionierenden Zeitpunkt zurückgesetzt."
+menueditor.flash.backup: 'Backup des Menüs von %time% wiederhergestellt.'
+
+#--
+# Search
+#--
+menueditor.search.taxonomy: "Taxonomie"
+menueditor.search.overview: "Übersicht"
+
+#--
+# Actions
+#--
+menueditor.actions.save: "Menü speichern"
+menueditor.actions.showhidechildren: "Auf-/zuklappen"
+menueditor.action.showhideeditor: "Klicken um Element zu bearbeiten"
+menueditor.action.delete: "Zum löschen eines Elements klicken."
+menueditor.actions.add: "Neues Element hinzufügen"
+menueditor.actions.restorebackups: "Menü wiederherstellen"
+
+#--
+# Fields
+#--
+menueditor.fields.label: "Bezeichnung"
+menueditor.fields.link: "Link"
+menueditor.fields.path: "Pfad"
+
+#--
+# Backups
+#--
+menueditor.backups.from: "Von"
+menueditor.backups.date: "Datum"
+menueditor.backups.restore: "Wiederherstellen"
+menueditor.backups.nobackups: "Es sind noch keine backups vorhanden. Backups werden beim Speichern des Menüs automatisch erstellt."
+
+#--
+# JS translations
+#--
+menueditor.js.loading: "Vorschläge werden geladen"
+menueditor.js.newlink: "Neuer link nach"
