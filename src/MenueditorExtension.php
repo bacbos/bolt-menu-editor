@@ -8,7 +8,7 @@ use Bolt\Controller\Zone;
 use Bolt\Asset\File\JavaScript;
 use Bolt\Asset\File\Stylesheet;
 use Bolt\Extension\SimpleExtension;
-use Bolt\Routing\ControllerCollection;
+use Silex\ControllerCollection;
 use Bolt\Translation\Translator as Trans;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
