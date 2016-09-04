@@ -1,0 +1,50 @@
+#--
+# Auth/permissions/menuitem/title
+#--
+menueditor.notallowed: "Logged in user does not have the correct rights to use this route."
+menueditor.title: "Menu editor"
+menueditor.menuitem: "Menu editor"
+
+#--
+# Flash messages
+#--
+menueditor.flash.saved: "De menu\'s zijn opgeslagen"
+menueditor.flash.error: "De menu\'s konden niet worden opgeslagen, we hebben de laatst opgeslagen verie terug gezet."
+menueditor.flash.backup: 'Menu backup van %time% tegrug gezet'
+
+#--
+# Search
+#--
+menueditor.search.taxonomy: "Taxonomy"
+menueditor.search.overview: "Overview"
+
+#--
+# Actions
+#--
+menueditor.actions.save: "Menus opslaan"
+menueditor.actions.showhidechildren: "Klik om de onderliggende items te tonen/verbergen"
+menueditor.action.showhideeditor: "Klik om item te tonen/verbergen"
+menueditor.action.delete: "Klik om item te verwijderen"
+menueditor.actions.add: "Nieuw menu item toevoegen"
+menueditor.actions.restorebackups: "Backups terug zetten"
+
+#--
+# Fields
+#--
+menueditor.fields.label: "Label"
+menueditor.fields.link: "Link"
+menueditor.fields.path: "Pad"
+
+#--
+# Backups
+#--
+menueditor.backups.from: "Van"
+menueditor.backups.date: "Datum"
+menueditor.backups.restore: "Terug zetten"
+menueditor.backups.nobackups: "Er zijn nog geen backups. Backups worden gemaakt bij het opslaan van de menu\'s."
+
+#--
+# JS translations
+#--
+menueditor.js.loading: "Suggesties worden opgehaald"
+menueditor.js.newlink: "Nieuwe link naar"
