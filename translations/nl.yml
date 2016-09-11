@@ -1,7 +1,7 @@
 #--
 # Auth/permissions/menuitem/title
 #--
-menueditor.notallowed: "Logged in user does not have the correct rights to use this route."
+menueditor.notallowed: "De ingelogde gebruiker heeft geen rechten voor dit menuitem."
 menueditor.title: "Menu editor"
 menueditor.menuitem: "Menu editor"
 
