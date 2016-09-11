@@ -11,6 +11,8 @@ menueditor.menuitem: "Menyredigerare"
 menueditor.flash.saved: "Menyerna har sparats"
 menueditor.flash.error: "Menyerna kunde inte sparas så de har återställts."
 menueditor.flash.backup: 'Meny backup från %time% har återställts'
+menueditor.flash.removefield: "The field <strong>%1%</strong> has successfully been remmoved. Don't forget to safe your changes."
+menueditor.flash.addedfield: "The field <strong>%1%</strong> has successfully been added. Don't forget to safe your changes."
 
 #--
 # Search
@@ -27,6 +29,8 @@ menueditor.action.showhideeditor: "Klicka för att visa/dölja redigeraren"
 menueditor.action.delete: "Klicka för att ta bort menypunkten."
 menueditor.actions.add: "Lägg till menypunkt"
 menueditor.actions.restorebackups: "Återställ backups"
+menueditor.actions.addfield: "Add field"
+menueditor.actions.removeField: "Remove field"
 
 #--
 # Fields
@@ -52,3 +56,17 @@ menueditor.backups.nobackups: "Inga backups än, backups skapas automatiskt när
 #--
 menueditor.js.loading: "Laddar förslag"
 menueditor.js.newlink: "Ny länk till"
+
+#--
+# Modal window
+#--
+menueditor.modal.close: "Close"
+menueditor.modal.add: "Add"
+menueditor.modal.title: "Add a new field"
+menueditor.modal.label: "Label"
+menueditor.modal.value: "Value"
+
+#--
+# Confirm Questions
+#--
+menueditor.confirm.removefield: "Are you sure you want to rmove the field: %1%?"

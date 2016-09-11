@@ -1,8 +1,19 @@
-function __(key) {
+function __(key, values) {
+    values = values || [];
     if(typeof menuEditorTranslations != 'undefined' && menuEditorTranslations[key]){
-        return menuEditorTranslations[key];
+        var translation = menuEditorTranslations[key];
+        if (values.length > 0) {
+            values.forEach(function (val, index) {
+                translation = translation.replace('%' + (index + 1) + '%', val);
+            });
+        }
+        return translation;
     }
     return key;
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 $().ready(function(){
@@ -23,7 +34,7 @@ $().ready(function(){
         expandOnHover: 700,
         startCollapsed: true
     });
-    
+
     function registerEvents() {
         $('.expandEditor, .itemTitle, .disclose, .deleteMenu').off('click')
 
@@ -31,12 +42,12 @@ $().ready(function(){
             $(this).closest('li').toggleClass('mjs-nestedSortable-collapsed').toggleClass('mjs-nestedSortable-expanded');
             $(this).find('i').toggleClass('fa-minus').toggleClass('fa-plus');
         });
-        
+
         $('.expandEditor, .itemTitle').on('click', function(){
             $(this).parent().siblings('.editor').toggle();
             $(this).parent().find('.expandEditor i').toggleClass('fa-chevron-down').toggleClass('fa-chevron-up');
         });
-        
+
         $('.deleteMenu').on('click', function(){
             $(this).parents('.mjs-nestedSortable-expanded').first().remove();
         });
@@ -158,7 +169,7 @@ $().ready(function(){
         templateResult: formatRepo,
         templateSelection: formatRepoSelection
     }).on('select2:select', function(evt){
-        $(".additem [name='link']").val(null).trigger("change"); 
+        $(".additem [name='link']").val(null).trigger("change");
         if(evt.params.data.contenttype){
             var path = evt.params.data.contenttype + '/' + evt.params.data.id;
             var label = $(".additem [name='label']").val() ? $(".additem [name='label']").val() : evt.params.data.title;
@@ -198,4 +209,74 @@ $().ready(function(){
         $('.active ol.sortable').append(markup);
         registerEvents();
     }
+
+    /**
+     * Show a flash message in top of the page
+     * @param {string} message The message to display
+     * @param {string} type Type of message (success(default), info, warning, danger)
+     * @param {boolean} close Show the close button (default: true)
+     */
+    function showFlash(message, type, close) {
+        type = type || 'success';
+        close = close === undefined ? true : false;
+
+        var flash = '<div class="alert alert-%type%" role="alert">%message%%button%</div>',
+            button = close ? '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' : '';
+
+        flash = flash
+            .replace('%type%', type)
+            .replace('%message%', message)
+            .replace('%button%', button);
+
+        $('.col-md-8').first().prepend(flash);
+    }
+
+    // Some modal stuuf
+    $('#new-field').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget),
+            fieldId = button.data('id'),
+            modal = $(this);
+
+        modal.find('#field-id').val(fieldId);
+        $('#field-label').focus();
+    });
+
+    $('#add-new-field').on('click', function () {
+        var label = $('#field-label').val(),
+            value = $('#field-value').val(),
+            id = $('#field-id').val(),
+            lastField = $('#menuitem-' + id + ' .form-group').last(),
+            template = lastField.clone();
+
+        if (label !== '' && value !== '') {
+            template.find('label').html(capitalizeFirstLetter(label));
+            template.find('input[type=text]')
+                .attr('name', label.toLowerCase())
+                .val(value);
+
+            $('#menuitem-' + id + ' .fields').append(template[0]);
+            $('#menuitem-' + id).attr('data-' + label, value);
+
+            //Close and reset the modal
+            $('#field-label').val('');
+            $('#field-value').val('');
+            showFlash(__('menueditor.flash.addedfield', [label]));
+        }
+
+        $('#new-field').modal('hide');
+        registerEvents();
+    });
+
+    $('.tab-content').on('click', '.remove-field', function (evt) {
+        evt.preventDefault();
+        var fieldId = $(this).data('id'),
+            fieldKey = $(this).data('key');
+
+        if (confirm(__('menueditor.confirm.removefield', [fieldKey]))) {
+            $('#menuitem-' + fieldId)
+                .removeAttr('data-' + fieldKey);
+            $('#group-' + fieldId + '-' + fieldKey).remove();
+            showFlash(__('menueditor.flash.removefield', [fieldKey]));
+        }
+    })
 });

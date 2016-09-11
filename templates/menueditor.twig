@@ -7,7 +7,7 @@
         <button type="submit" class="btn btn-success" data-content="{{ __('menueditor.actions.save')}} "> <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
     </div>
 </form>
-{{ __('menueditor.title')}} 
+{{ __('menueditor.title')}}
 {% endblock %}
 {% block page_nav 'Settings/Extensions' %}
 
@@ -22,20 +22,29 @@
             </div>
 
             <div class="form-horizontal editor" style="display:none;">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">{{ __('menueditor.fields.label')}}</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" placeholder="{{ __('menueditor.fields.label')}}" name="label" value="{{menuitem.label}}">
-                    </div>
-                </div>
-                {% for key, value in menuitem|merge(menu_config.fields) if key not in ['submenu', 'label'] %}
+                <div class="fields">
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">{{__(key)|humanize}}</label>
+                        <label class="col-sm-2 control-label">{{ __('menueditor.fields.label')}}</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="{{__(key)|humanize}}" name="{{key}}" value="{{value}}">
+                            <input type="text" class="form-control" placeholder="{{ __('menueditor.fields.label')}}" name="label" value="{{menuitem.label}}">
                         </div>
                     </div>
-                {% endfor %}
+                    {% for key, value in menuitem|merge(menu_config.fields) if key not in ['submenu', 'label'] %}
+                        <div class="form-group" id="group-{{ id }}-{{ key }}">
+                            <label class="col-sm-2 control-label">{{__(key)|humanize}}</label>
+                            <div class="col-sm-8 col-xs-9">
+                                <input type="text" class="form-control" placeholder="{{__(key)|humanize}}" name="{{key}}" value="{{value}}">
+                            </div>
+                            <div class="col-sm-2 col-xs-3">
+                                <button class="btn btn-danger remove-field" data-id="{{id}}" data-key="{{key}}" title="{{ __('menueditor.actions.removefield')}}"><i class="fa fa-remove"></i></button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="footer clearfix text-right" id="footer{{ id }}">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#new-field" data-id="{{ id }}"><i class="fa fa-plus"></i> {{ __('menueditor.actions.addfield') }}</button>
+                </div>
             </div>
         </div>
         <ol>
@@ -44,7 +53,7 @@
                 {{ _self.menuitem(submenuitem, id, menu_config)}}
             {% endfor %}
         </ol>
-        
+
     </li>
 {% endmacro %}
 
@@ -126,4 +135,33 @@
         </aside>
     </div>
     <script>var menuEditorTranslations = {{JsTranslations|raw}}</script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="new-field" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('menueditor.modal.close') }}"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{ __('menueditor.modal.title') }}</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input type="hidden" class="form-control" id="field-id">
+                        <div class="form-group">
+                            <label for="field-label" class="control-label">{{ __('menueditor.modal.label') }}:</label>
+                            <input type="text" class="form-control" id="field-label">
+                        </div>
+                        <div class="form-group">
+                            <label for="field-value" class="control-label">{{ __('menueditor.modal.value') }}:</label>
+                            <textarea class="form-control" id="field-value"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('menueditor.modal.close') }}</button>
+                    <button type="button" class="btn btn-primary" id="add-new-field">{{ __('menueditor.modal.add') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
