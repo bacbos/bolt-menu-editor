@@ -11,6 +11,8 @@ menueditor.menuitem: "Menu-Editor"
 menueditor.flash.saved: "Die Menüs wurden gespeichert"
 menueditor.flash.error: "Menü konnte nicht gespeichert werden, es wurde auf den letzten funktionierenden Zeitpunkt zurückgesetzt."
 menueditor.flash.backup: 'Backup des Menüs von %time% wiederhergestellt.'
+menueditor.flash.removefield: "The field <strong>%1%</strong> has successfully been remmoved. Don't forget to safe your changes."
+menueditor.flash.addedfield: "The field <strong>%1%</strong> has successfully been added. Don't forget to safe your changes."
 
 #--
 # Search
@@ -27,6 +29,8 @@ menueditor.action.showhideeditor: "Klicken um Element zu bearbeiten"
 menueditor.action.delete: "Zum löschen eines Elements klicken."
 menueditor.actions.add: "Neues Element hinzufügen"
 menueditor.actions.restorebackups: "Menü wiederherstellen"
+menueditor.actions.addfield: "Add field"
+menueditor.actions.removeField: "Remove field"
 
 #--
 # Fields
@@ -48,3 +52,17 @@ menueditor.backups.nobackups: "Es sind noch keine backups vorhanden. Backups wer
 #--
 menueditor.js.loading: "Vorschläge werden geladen"
 menueditor.js.newlink: "Neuer link nach"
+
+#--
+# Modal window
+#--
+menueditor.modal.close: "Close"
+menueditor.modal.add: "Add"
+menueditor.modal.title: "Add a new field"
+menueditor.modal.label: "Label"
+menueditor.modal.value: "Value"
+
+#--
+# Confirm Questions
+#--
+menueditor.confirm.removefield: "Are you sure you want to rmove the field: %1%?"

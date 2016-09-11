@@ -160,7 +160,10 @@ class MenueditorExtension extends SimpleExtension
                 'menueditor.action.delete'            => Trans::__('menueditor.action.delete'),
                 'menueditor.fields.label'             => Trans::__('menueditor.fields.label'),
                 'menueditor.fields.link'              => Trans::__('menueditor.fields.link'),
-                'menueditor.fields.path'              => Trans::__('menueditor.fields.path')
+                'menueditor.fields.path'              => Trans::__('menueditor.fields.path'),
+                'menueditor.flash.removefield'        => Trans::__('menueditor.flash.removefield'),
+                'menueditor.flash.addedfield'         => Trans::__('menueditor.flash.addedfield'),
+                'menueditor.confirm.removefield'      => Trans::__('menueditor.confirm.removefield')
             ])
         ];
 

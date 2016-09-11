@@ -8,15 +8,17 @@ menueditor.menuitem: "Menu editor"
 #--
 # Flash messages
 #--
-menueditor.flash.saved: "De menu\'s zijn opgeslagen"
-menueditor.flash.error: "De menu\'s konden niet worden opgeslagen, we hebben de laatst opgeslagen verie terug gezet."
+menueditor.flash.saved: "De menu's zijn opgeslagen"
+menueditor.flash.error: "De menu's konden niet worden opgeslagen, we hebben de laatst opgeslagen verie terug gezet."
 menueditor.flash.backup: 'Menu backup van %time% tegrug gezet'
+menueditor.flash.removefield: "Het veld <strong>%1%</strong> is met succes verwijderd. Vergeet je wijzigingen niet op te slaan."
+menueditor.flash.addedfield: "Het veld <strong>%1%</strong> is met succes toegevoegd. Vergeet je wijzigingen niet op te slaan."
 
 #--
 # Search
 #--
 menueditor.search.taxonomy: "Taxonomy"
-menueditor.search.overview: "Overview"
+menueditor.search.overview: "Overzicht"
 
 #--
 # Actions
@@ -27,6 +29,8 @@ menueditor.action.showhideeditor: "Klik om item te tonen/verbergen"
 menueditor.action.delete: "Klik om item te verwijderen"
 menueditor.actions.add: "Nieuw menu item toevoegen"
 menueditor.actions.restorebackups: "Backups terug zetten"
+menueditor.actions.addfield: "Nieuw veld"
+menueditor.actions.removeField: "Verwijder veld"
 
 #--
 # Fields
@@ -48,3 +52,17 @@ menueditor.backups.nobackups: "Er zijn nog geen backups. Backups worden gemaakt 
 #--
 menueditor.js.loading: "Suggesties worden opgehaald"
 menueditor.js.newlink: "Nieuwe link naar"
+
+#--
+# Modal window
+#--
+menueditor.modal.close: "Sluiten"
+menueditor.modal.add: "Voeg toe"
+menueditor.modal.title: "Voeg een nieuw veld toe"
+menueditor.modal.label: "Label"
+menueditor.modal.value: "Waarde"
+
+#--
+# Confirm Questions
+#--
+menueditor.confirm.removefield: "Weet je zeker dat je veld %1% wilt verwijderen?"
