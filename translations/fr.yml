@@ -1,0 +1,68 @@
+#--
+# Auth/permissions/menuitem/title
+#--
+menueditor.notallowed: "Utilisateur connecté ne possède pas les droits d'accès requis."
+menueditor.title: "Editeur menu"
+menueditor.menuitem: "Editeur menu"
+
+#--
+# Flash messages
+#--
+menueditor.flash.saved: "Les menus ont été sauvés"
+menueditor.flash.error: "Menu n'a pas pu être sauvé, il a été restauré à son ancien temps de travail."
+menueditor.flash.backup: 'Sauvegarde du menu du %time% restaurée.'
+menueditor.flash.removefield: "Le champ <strong>%1%</strong> a été supprimé. Ne pas oublier d'enregistrer le changement."
+menueditor.flash.addedfield: "Le champ <strong>%1%</strong> a été ajouté. Ne pas oublier d'enregistrer le changement."
+
+#--
+# Search
+#--
+menueditor.search.taxonomy: "Taxonomie"
+menueditor.search.overview: "Enquête"
+
+#--
+# Actions
+#--
+menueditor.actions.save: "Enregistrer"
+menueditor.actions.showhidechildren: "Ouvrir / fermer"
+menueditor.action.showhideeditor: "Cliquez pour modifier l'élément"
+menueditor.action.delete: "Cliquez pour supprimer un élément."
+menueditor.actions.add: "Ajouter un nouvel élément"
+menueditor.actions.restorebackups: "Restaurer le menu"
+menueditor.actions.addfield: "Ajouter un champ"
+menueditor.actions.removeField: "Supprimer"
+
+#--
+# Fields
+#--
+menueditor.fields.label: "Désignation"
+menueditor.fields.link: "Lien"
+menueditor.fields.path: "Lien"
+
+#--
+# Backups
+#--
+menueditor.backups.from: "Du"
+menueditor.backups.date: "Date"
+menueditor.backups.restore: "Restaurer"
+menueditor.backups.nobackups: "Il n'y a pas de sauvegardes disponibles. Les sauvegardes sont créées automatiquement lorsque vous enregistrez le menu."
+
+#--
+# JS translations
+#--
+menueditor.js.loading: "Chargement des suggestions"
+menueditor.js.newlink: "Noveau lien vers"
+
+#--
+# Modal window
+#--
+menueditor.modal.close: "Fermer"
+menueditor.modal.add: "Ajouter"
+menueditor.modal.title: "Ajouter un champ"
+menueditor.modal.label: "Désignation"
+menueditor.modal.value: "Valeur"
+
+#--
+# Confirm Questions
+#--
+menueditor.confirm.removefield: "Êtes-vous sûr de vouloir supprimer le champ %1%?"
