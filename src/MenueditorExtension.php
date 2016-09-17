@@ -40,10 +40,11 @@ class MenueditorExtension extends SimpleExtension
      */
     protected function registerMenuEntries()
     {
+        $config = $this->getConfig();
         $menu = new MenuEntry('extend/menueditor', 'menueditor');
         $menu->setLabel(Trans::__('menueditor.menuitem'))
             ->setIcon('fa:bars')
-            ->setPermission('files:config');
+            ->setPermission($config['permission']);
 
         return [
             $menu,
@@ -72,7 +73,8 @@ class MenueditorExtension extends SimpleExtension
             'fields' => [],
             'backups' => [
                 'enabled' => false
-            ]
+            ],
+            'permission' => 'files:config'
         ];
     }
 
@@ -85,6 +87,8 @@ class MenueditorExtension extends SimpleExtension
      */
     public function menuEditor(Application $app, Request $request)
     {
+        $config = $this->getConfig();
+
         $assets = [
             new JavaScript('menueditor.js'),
             new Stylesheet('menueditor.css'),
@@ -97,11 +101,9 @@ class MenueditorExtension extends SimpleExtension
             $asset->setPackageName('extensions')->setPath($file->getPath());
             $app['asset.queue.file']->add($asset);
         }
-        
-        $config = $this->getConfig();
-        
+
         // Block unauthorized access...
-        if (!$app['users']->isAllowed('files:config')) {
+        if (!$app['users']->isAllowed($config['permission'])) {
             throw new AccessDeniedException(Trans::__('menueditor.notallowed'));
         }
 
