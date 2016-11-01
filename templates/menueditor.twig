@@ -12,7 +12,7 @@
 {% block page_nav 'Settings/Extensions' %}
 
 {% macro menuitem(menuitem, id, menu_config) %}
-    <li class="mjs-nestedSortable-expanded"{% for key, value in menuitem|merge(menu_config.fields) if key not in ['submenu'] %}data-{{key}}="{{value}}"{% endfor %} id="menuitem-{{id}}">
+    <li class="mjs-nestedSortable-expanded"{% for key, value in menu_config.fields|merge(menuitem) if key not in ['submenu'] %}data-{{key}}="{{value}}"{% endfor %} id="menuitem-{{id}}">
         <div>
             <div class="flex-row">
                 <span title="{{ __('menueditor.action.showhidechildren')}}" class="no-grow disclose"><i class="fa fa-minus" aria-hidden="true"></i></span>
@@ -29,7 +29,7 @@
                             <input type="text" class="form-control" placeholder="{{ __('menueditor.fields.label')}}" name="label" value="{{menuitem.label}}">
                         </div>
                     </div>
-                    {% for key, value in menuitem|merge(menu_config.fields) if key not in ['submenu', 'label'] %}
+                    {% for key, value in menu_config.fields|merge(menuitem) if key not in ['submenu', 'label'] %}
                         <div class="form-group" id="group-{{ id }}-{{ key }}">
                             <label class="col-sm-2 control-label">{{__(key)|humanize}}</label>
                             <div class="col-sm-8 col-xs-9">
