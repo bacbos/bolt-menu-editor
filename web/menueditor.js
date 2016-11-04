@@ -52,12 +52,22 @@ $().ready(function(){
             $(this).parents('.mjs-nestedSortable-expanded').first().remove();
         });
 
-        $('.editor [name]').on('input', function(){
+        $('.editor [type=text], .editor textarea').on('input', function(){
             var key = $(this).attr('name');
             $(this).parents('.mjs-nestedSortable-expanded').first().attr('data-'+key, $(this).val());
             if(key == 'label'){
                 $(this).parents('.mjs-nestedSortable-expanded').first().find('.itemTitle').first().text($(this).val());
             }
+        });
+
+        $('.editor [type=checkbox]').on('change', function(){
+            var key = $(this).attr('name');
+            $(this).parents('.mjs-nestedSortable-expanded').first().attr('data-'+key, $(this).prop('checked'));
+        });
+
+        $('.editor select').on('change', function(){
+            var key = $(this).attr('name');
+            $(this).parents('.mjs-nestedSortable-expanded').first().attr('data-'+key, $(this).val());
         });
     }
     registerEvents();
@@ -169,7 +179,7 @@ $().ready(function(){
         templateResult: formatRepo,
         templateSelection: formatRepoSelection
     }).on('select2:select', function(evt){
-        $(".additem [name='link']").val(null).trigger("change");
+        $(".additem [name='link']").trigger("change");
         if(evt.params.data.contenttype){
             var path = evt.params.data.contenttype + '/' + evt.params.data.id;
             var label = $(".additem [name='label']").val() ? $(".additem [name='label']").val() : evt.params.data.title;
