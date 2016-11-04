@@ -46,6 +46,9 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
     border-top: 1px solid #ddd;
     box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
 }
+.editor.form-horizontal .form-group {
+    margin-top: 12px;
+}
 .editor .menulabel {
     white-space: nowrap;
     padding: 5px;

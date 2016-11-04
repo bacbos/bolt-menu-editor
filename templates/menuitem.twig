@@ -1,0 +1,52 @@
+
+{% macro menuitem(menuitem, id, menu_config, name) %}
+{% import "@bolt/menufields.twig" as fields %}
+    <li class="mjs-nestedSortable-expanded"{% for key, value in menu_config.fields|merge(menuitem) if key not in ['submenu'] %}data-{{key}}="{{value}}"{% endfor %} id="menuitem-{{id}}">
+        <div>
+            <!-- The menuitem header -->
+            <div class="flex-row">
+                <span title="{{ __('menueditor.action.showhidechildren')}}" class="no-grow disclose">
+                    <i class="fa fa-minus" aria-hidden="true"></i>
+                </span>
+                <span title="{{ __('menueditor.action.showhideeditor')}}" class="no-grow expandEditor">
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </span>
+                <span class="itemTitle">{{menuitem.label}}</span>
+                <span title="{{ __('menueditor.action.delete')}}" class="no-grow deleteMenu">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </span>
+            </div>
+
+            <!-- The menuitem content -->
+            <div class="form-horizontal editor" style="display:none;">
+                <div class="fields">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">{{ __('menueditor.fields.label')}}</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="{{ __('menueditor.fields.label')}}" name="label" value="{{menuitem.label}}">
+                        </div>
+                    </div>
+
+                    {% for key, value in menu_config.fields|merge(menuitem) if key not in ['submenu', 'label'] %}
+                        {{ fields.field(key, value, id, menu_config, name) }}
+                    {% endfor %}
+                </div>
+
+                {% if menu_config.addcustomfields is not defined or menu_config.addcustomfields != false %}
+                <div class="footer clearfix text-right" id="footer{{ id }}">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#new-field" data-id="{{ id }}">
+                        <i class="fa fa-plus"></i> {{ __('menueditor.actions.addfield') }}
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <ol>
+            {% for submenuitem in menuitem.submenu|default([]) %}
+                {% set id = id ~ '-' ~ loop.index %}
+                {{ _self.menuitem(submenuitem, id, menu_config, name)}}
+            {% endfor %}
+        </ol>
+
+    </li>
+{% endmacro %}
