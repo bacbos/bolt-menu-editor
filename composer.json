@@ -36,6 +36,10 @@
     "extra": {
         "bolt-icon": "bolt-menu-editor.png",
         "bolt-assets": "web",
-        "bolt-class": "Bolt\\Extension\\Bacboslab\\Menueditor\\MenueditorExtension"
+        "bolt-class": "Bolt\\Extension\\Bacboslab\\Menueditor\\MenueditorExtension",
+        "bolt-screenshots": [
+            "screenshot.png",
+            "screenshot2.png"
+        ]
     }
 }

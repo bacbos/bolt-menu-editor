@@ -179,7 +179,7 @@ $().ready(function(){
         templateResult: formatRepo,
         templateSelection: formatRepoSelection
     }).on('select2:select', function(evt){
-        $(".additem [name='link']").val(null)trigger("change");
+        $(".additem [name='link']").val(null).trigger("change");
         if(evt.params.data.contenttype){
             var path = evt.params.data.contenttype + '/' + evt.params.data.id;
             var label = $(".additem [name='label']").val() ? $(".additem [name='label']").val() : evt.params.data.title;
