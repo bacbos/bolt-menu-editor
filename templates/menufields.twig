@@ -1,7 +1,14 @@
 {# function for adding fields. Returns a text input if no type is given #}
 {% macro field(key, value, id, menu_config, name) %}
     {% import _self as fields %}
-    {% set delete = menu_config.menufields[name][key].delete is defined ? menu_config.menufields[name][key].delete : true %}
+
+    {# If you'r not allowed to add fields you also may not delete them #}
+    {% if menu_config.addcustomfields is defined and menu_config.addcustomfields == false %}
+        {% set delete = false %}
+    {% else %}
+        {# Check if delete is set. Defaults to true #}
+        {% set delete = menu_config.menufields[name][key].delete is defined ? menu_config.menufields[name][key].delete : true %}
+    {% endif %}
 
     {% if menu_config.menufields[name][key] %}
         {% set type = menu_config.menufields[name][key].type %}
@@ -45,30 +52,36 @@
 {% endmacro %}
 
 {# Generate a textarea #}
-{% macro textarea(key, value, id) %}
+{% macro textarea(key, value, id, delete) %}
     <div class="form-group" id="group-{{ id }}-{{ key }}">
         <label class="col-sm-3 control-label">{{ __(key)|humanize }}</label>
         <div class="col-sm-9">
+            {% if delete %}
             <div class="input-group">
+            {% endif %}
                 <textarea class="form-control" placeholder="{{ __(key)|humanize }}"
                           name="{{ key }}">{{ value }}</textarea>
 
+            {% if delete %}
                 <div class="btn btn-silent-danger remove-field input-group-addon" data-id="{{ id }}"
                      data-key="{{ key }}"
                      title="{{ __('menueditor.actions.removefield') }}">
                     <i class="fa fa-remove"></i>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 {% endmacro %}
 
 {# Generate a select field with options #}
-{% macro select(key, value, id, values) %}
+{% macro select(key, value, id, values, delete) %}
     <div class="form-group" id="group-{{ id }}-{{ key }}">
         <label class="col-sm-3 control-label">{{ __(key)|humanize }}</label>
         <div class="col-sm-9">
+            {% if delete %}
             <div class="input-group">
+            {% endif %}
                 <select name="{{ key }}" class="form-control">
                     <option value="none">Selecteer</option>
                     {% for name, label in values %}
@@ -76,28 +89,34 @@
                     {% endfor %}
                 </select>
 
+            {% if delete %}
                 <div class="btn btn-silent-danger remove-field input-group-addon" data-id="{{ id }}"
                      data-key="{{ key }}"
                      title="{{ __('menueditor.actions.removefield') }}">
                     <i class="fa fa-remove"></i>
                 </div>
             </div>
+            {% endif %}
         </div>
     </div>
 {% endmacro %}
 
 {# Add a checkbox #}
-{% macro checkbox(key, value, id) %}
+{% macro checkbox(key, value, id, delete) %}
     <div class="form-group" id="group-{{ id }}-{{ key }}">
         <label class="col-sm-3 control-label">{{ __(key)|humanize }}</label>
         <div class="col-sm-7 col-xs-8">
             <input type="checkbox" name="{{ key }}" value="true" {{ value ? 'checked="checked"' : '' }}>
         </div>
+
         <div class="col-sm-2 col-xs-3">
+        {% if delete %}
             <button class="btn btn-silent-danger remove-field pull-right" data-id="{{ id }}" data-key="{{ key }}"
                     title="{{ __('menueditor.actions.removefield') }}">
                 <i class="fa fa-remove"></i>
             </button>
+        {% endif %}
         </div>
+
     </div>
 {% endmacro %}
