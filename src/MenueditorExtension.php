@@ -186,8 +186,10 @@ class MenueditorExtension extends SimpleExtension
      */
     public function menuEditorSearch(Application $app, Request $request)
     {
+        $config = $this->getConfig();
+
         //Block unauthorized access...
-        if (!$app['users']->isAllowed('files:config')) {
+        if (!$app['users']->isAllowed($config['permission'])) {
             throw new AccessDeniedException(Trans::__('menueditor.notallowed'));
         }
 
