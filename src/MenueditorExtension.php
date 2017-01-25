@@ -205,7 +205,7 @@ class MenueditorExtension extends SimpleExtension
                 'link'        => $record->link(),
                 'contenttype' => $record->contenttype['singular_slug'],
                 'type'        => $record->contenttype['singular_name'],
-                'icon'        => str_replace(':', '-', $record->contenttype['icon_one']),
+                'icon'        => isset($record->contenttype['icon_one']) ? str_replace(':', '-', $record->contenttype['icon_one']) : '',
                 'id'          => $record->id
             ];
         }
@@ -218,7 +218,7 @@ class MenueditorExtension extends SimpleExtension
                     'id'    => $ct['slug'],
                     'title' => $ct['name'],
                     'type'  => Trans::__('menueditor.search.overview'),
-                    'icon'  => str_replace(':', '-', $ct['icon_many'])
+                    'icon'  => isset($ct['icon_many']) ? str_replace(':', '-', $ct['icon_many']) : ''
                 ];
             }
         }
