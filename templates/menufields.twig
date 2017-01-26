@@ -13,7 +13,7 @@
         {% set delete = menu_config.menufields[name][key].delete is defined ? menu_config.menufields[name][key].delete : true %}
     {% endif %}
 
-    {% if menu_config.menufields[name][key] %}
+    {% if menu_config.menufields is defined and menu_config.menufields[name][key] %}
         {% set type = menu_config.menufields[name][key].type %}
 
         {% if type == 'text' %}
