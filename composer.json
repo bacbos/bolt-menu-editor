@@ -18,6 +18,9 @@
         }, {
             "name": "Svante Richter",
             "email": "svante.richter@gmail.com"
+        }, {
+            "name": "Erwin Goossen",
+            "email": "erwin@navelpluisje.nl"
         }
     ],
     "minimum-stability": "dev",
