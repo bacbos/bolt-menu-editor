@@ -36,11 +36,11 @@ backups:
 #             type: text
 #             delete: false
 #         path:
-#         	delete: false
+#             delete: false
 #         use_icon:
 #             type: checkbox
 #         tooltip:
-#         	type: textarea
+#             type: textarea
 
 # Permission for the menu editor
 # Use an existing permission from the /bolt/roles page, or create your own
