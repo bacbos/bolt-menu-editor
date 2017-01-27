@@ -5,12 +5,12 @@
     <form type="post" class="saveform" method="post">
         <input type="hidden" name="menus" value="">
         <div class="form-group">
-            <button type="submit" class="btn btn-success" data-content="{{ __('menueditor.actions.save')}} ">
+            <button type="submit" class="btn btn-success" data-content="{{ __('menueditor.actions.save', {'DEFAULT':'Save menus'}) }} ">
                 &nbsp;<i class="fa fa-floppy-o" aria-hidden="true"></i>
             </button>
         </div>
     </form>
-    {{ __('menueditor.title')}}
+    {{ __('menueditor.title', {'DEFAULT': 'Menu editor'})}}
 {% endblock %}
 
 {% block page_nav 'Settings/Extensions' %}
@@ -42,11 +42,11 @@
         <aside class="col-md-4 sidebar">
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
-                    <a href="#add-menu-item" aria-controls="add-menu-item" role="tab" data-toggle="tab">{{ __('menueditor.actions.add')}}</a>
+                    <a href="#add-menu-item" aria-controls="add-menu-item" role="tab" data-toggle="tab">{{ __('menueditor.actions.add', {'DEFAULT': 'Add menu item'})}}</a>
                 </li>
                 {% if menu_config.backups.enable %}
                     <li role="presentation" class="">
-                        <a href="#restore-backups" aria-controls="restore-backups" role="tab" data-toggle="tab">{{ __('menueditor.actions.restorebackups')}}</a>
+                        <a href="#restore-backups" aria-controls="restore-backups" role="tab" data-toggle="tab">{{ __('menueditor.actions.restorebackups', {'DEFAULT': 'Restore backups'})}}</a>
                     </li>
                 {% endif %}
             </ul>
@@ -54,13 +54,13 @@
                 <div role="tabpanel" class="tab-pane active" id="add-menu-item">
                     <form class="form-horizontal additem">
                         <div class="form-group">
-                            <label for="exampleInputEmail1" class="col-sm-4 control-label">{{ __('menueditor.fields.label')}}</label>
+                            <label for="exampleInputEmail1" class="col-sm-4 control-label">{{ __('menueditor.fields.label', {'DEFAULT': 'Label'})}}</label>
                             <div class="col-sm-8">
-                                <input type="text" class="form-control" placeholder="{{ __('menueditor.fields.label')}}" name="label">
+                                <input type="text" class="form-control" placeholder="{{ __('menueditor.fields.label', {'DEFAULT': 'Label'})}}" name="label">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1" class="col-sm-4 control-label">{{ __('menueditor.fields.link')}}/{{ __('menueditor.fields.path')}}</label>
+                            <label for="exampleInputPassword1" class="col-sm-4 control-label">{{ __('menueditor.fields.link', {'DEFAULT': 'Link'})}}/{{ __('menueditor.fields.path', {'DEFAULT': 'Path'})}}</label>
                             <div class="col-sm-8">
                                 <select class="js-data-example-ajax" name="link" style="width: 100%;">
                                     {% for item in items|default([]) %}
@@ -76,8 +76,8 @@
                         {% if backups %}
                             <table class="table">
                                 <tr>
-                                    <th>{{ __('menueditor.backups.from')}}
-                                    <th>{{ __('menueditor.backups.date')}}
+                                    <th>{{ __('menueditor.backups.from', {'DEFAULT': 'From'})}}
+                                    <th>{{ __('menueditor.backups.date', {'DEFAULT': 'Date'})}}
                                     <th>
                                 {% for backup in backups %}
                                     <tr>
@@ -86,12 +86,12 @@
                                         <td>
                                             <form method="post">
                                                 <input type="hidden" name="backup" value="{{backup.filename}}">
-                                                <button type="submit" class="btn btn-warning btn-xs">{{ __('menueditor.backups.restore')}}</button>
+                                                <button type="submit" class="btn btn-warning btn-xs">{{ __('menueditor.backups.restore', {'DEFAULT': 'Restore'})}}</button>
                                             </form>
                                 {% endfor %}
                             </table>
                         {% else %}
-                            <p>{{ __('menueditor.backups.nobackups')}}</p>
+                            <p>{{ __('menueditor.backups.nobackups', {'DEFAULT': 'No backups yet, backups are created automatically when you save the menu.'})}}</p>
                         {% endif %}
                     </div>
                 {% endif %}
@@ -105,27 +105,27 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('menueditor.modal.close') }}">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('menueditor.modal.close', {'DEFAULT': 'Close'}) }}">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">{{ __('menueditor.modal.title') }}</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ __('menueditor.modal.title', {'DEFAULT': 'Add a new field'}) }}</h4>
                 </div>
                 <div class="modal-body">
                     <form>
                         <input type="hidden" class="form-control" id="field-id">
                         <div class="form-group">
-                            <label for="field-label" class="control-label">{{ __('menueditor.modal.label') }}:</label>
+                            <label for="field-label" class="control-label">{{ __('menueditor.modal.label', {'DEFAULT': 'Label'}) }}:</label>
                             <input type="text" class="form-control" id="field-label">
                         </div>
                         <div class="form-group">
-                            <label for="field-value" class="control-label">{{ __('menueditor.modal.value') }}:</label>
+                            <label for="field-value" class="control-label">{{ __('menueditor.modal.value', {'DEFAULT': 'Value'}) }}:</label>
                             <textarea class="form-control" id="field-value"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('menueditor.modal.close') }}</button>
-                    <button type="button" class="btn btn-primary" id="add-new-field">{{ __('menueditor.modal.add') }}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ __('menueditor.modal.close', {'DEFAULT': 'Close'}) }}</button>
+                    <button type="button" class="btn btn-primary" id="add-new-field">{{ __('menueditor.modal.add', {'DEFAULT': 'Add a new field'}) }}</button>
                 </div>
             </div>
         </div>

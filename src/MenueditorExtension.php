@@ -42,7 +42,10 @@ class MenueditorExtension extends SimpleExtension
     {
         $config = $this->getConfig();
         $menu = new MenuEntry('extend/menueditor', 'menueditor');
-        $menu->setLabel(Trans::__('menueditor.menuitem'))
+        $menu->setLabel(Trans::__(
+            'menueditor.menuitem',
+            ['DEFAULT' => 'Menu editor']
+        ))
             ->setIcon('fa:bars')
             ->setPermission($config['permission']);
 
@@ -104,7 +107,10 @@ class MenueditorExtension extends SimpleExtension
 
         // Block unauthorized access...
         if (!$app['users']->isAllowed($config['permission'])) {
-            throw new AccessDeniedException(Trans::__('menueditor.notallowed'));
+            throw new AccessDeniedException(Trans::__(
+                'menueditor.notallowed',
+                ['DEFAULT' => 'Logged in user does not have the correct rights to use this route.']
+            ));
         }
 
         // Handle posted menus
@@ -122,7 +128,10 @@ class MenueditorExtension extends SimpleExtension
                 $parser->parse($yaml);
             } catch (\Exception $e) {
                 // Don't save menufile if we got a json on yaml error
-                $app['logger.flash']->error(Trans::__('menueditor.flash.error'));
+                $app['logger.flash']->error(Trans::__(
+                    'menueditor.flash.error',
+                    ['DEFAULT' => 'Menu couldn\'t be saved, we have restored it to it\'s last known good state.']
+                ));
                 return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
             }
             // Handle backups
@@ -130,7 +139,7 @@ class MenueditorExtension extends SimpleExtension
                 $app['filesystem']->createDir($config['backups']['folder']);
                 // Create new backup
                 $backup = $dumper->dump($app['config']->get('menu'), 9999);
-                $app['filesystem']->put($config['backups']['folder'].'/menu.' . time() . '.yml', $backup);
+                $app['filesystem']->put($config['backups']['folder'] . '/menu.' . time() . '.yml', $backup);
                 // Delete oldest backup if we have too many
                 $backups = $app['filesystem']->listContents($config['backups']['folder']);
                 if (count($backups) > $config['backups']['keep']) {
@@ -139,7 +148,10 @@ class MenueditorExtension extends SimpleExtension
             }
             // Save menu file
             $app['filesystem']->getFile('config://menu.yml')->put($yaml);
-            $app['logger.flash']->success(Trans::__('menueditor.flash.saved'));
+            $app['logger.flash']->success(Trans::__(
+                'menueditor.flash.saved',
+                ['DEFAULT' => 'The menus have been saved']
+            ));
             return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
         }
         // Handle restoring backups
@@ -155,17 +167,50 @@ class MenueditorExtension extends SimpleExtension
             'menus' => $app['config']->get('menu'),
             'menu_config' => $config,
             'JsTranslations' => json_encode([
-                'menueditor.js.loading'               => Trans::__('menueditor.js.loading'),
-                'menueditor.js.newlink'               => Trans::__('menueditor.js.newlink'),
-                'menueditor.actions.showhidechildren' => Trans::__('menueditor.actions.showhidechildren'),
-                'menueditor.action.showhideeditor'    => Trans::__('menueditor.action.showhideeditor'),
-                'menueditor.action.delete'            => Trans::__('menueditor.action.delete'),
-                'menueditor.fields.label'             => Trans::__('menueditor.fields.label'),
-                'menueditor.fields.link'              => Trans::__('menueditor.fields.link'),
-                'menueditor.fields.path'              => Trans::__('menueditor.fields.path'),
-                'menueditor.flash.removefield'        => Trans::__('menueditor.flash.removefield'),
-                'menueditor.flash.addedfield'         => Trans::__('menueditor.flash.addedfield'),
-                'menueditor.confirm.removefield'      => Trans::__('menueditor.confirm.removefield')
+                'menueditor.js.loading' => Trans::__(
+                    'menueditor.js.loading',
+                    ['DEFAULT' => 'Loading suggestions']
+                ),
+                'menueditor.js.newlink' => Trans::__(
+                    'menueditor.js.newlink',
+                    ['DEFAULT' => 'New link to']
+                ),
+                'menueditor.actions.showhidechildren' => Trans::__(
+                    'menueditor.actions.showhidechildren',
+                    ['DEFAULT' => 'Click to show/hide children']
+                ),
+                'menueditor.action.showhideeditor' => Trans::__(
+                    'menueditor.action.showhideeditor',
+                    ['DEFAULT' => 'Click to show/hide item editor']
+                ),
+                'menueditor.action.delete' => Trans::__(
+                    'menueditor.action.delete',
+                    ['DEFAULT' => 'Click to delete item']
+                ),
+                'menueditor.fields.label' => Trans::__(
+                    'menueditor.fields.label',
+                    ['DEFAULT' => 'Label']
+                ),
+                'menueditor.fields.link' => Trans::__(
+                    'menueditor.fields.link',
+                    ['DEFAULT' => 'Link']
+                ),
+                'menueditor.fields.path' => Trans::__(
+                    'menueditor.fields.path',
+                    ['DEFAULT' => 'Path']
+                ),
+                'menueditor.flash.removefield' => Trans::__(
+                    'menueditor.flash.removefield',
+                    ['DEFAULT' => 'The field <strong>%1%</strong> has successfully been removed. Don\'t forget to safe your changes']
+                ),
+                'menueditor.flash.addedfield' => Trans::__(
+                    'menueditor.flash.addedfield',
+                    ['DEFAULT' => 'The field <strong>%1%</strong> has successfully been added. Don\'t forget to safe your changes.']
+                ),
+                'menueditor.confirm.removefield' => Trans::__(
+                    'menueditor.confirm.removefield',
+                    ['DEFAULT' => 'Are you sure you want to remove the field: %1%?']
+                )
             ])
         ];
 
@@ -190,7 +235,10 @@ class MenueditorExtension extends SimpleExtension
 
         //Block unauthorized access...
         if (!$app['users']->isAllowed($config['permission'])) {
-            throw new AccessDeniedException(Trans::__('menueditor.notallowed'));
+            throw new AccessDeniedException(Trans::__(
+                'menueditor.notallowed',
+                ['DEFAULT' => 'Logged in user does not have the correct rights to use this route.']
+            ));
         }
 
         $query = $request->get('q');
@@ -217,7 +265,7 @@ class MenueditorExtension extends SimpleExtension
                     'link'  => $ct['slug'],
                     'id'    => $ct['slug'],
                     'title' => $ct['name'],
-                    'type'  => Trans::__('menueditor.search.overview'),
+                    'type'  => Trans::__('menueditor.search.overview', ['DEFAULT' => 'Overview']),
                     'icon'  => isset($ct['icon_many']) ? str_replace(':', '-', $ct['icon_many']) : ''
                 ];
             }
@@ -232,7 +280,7 @@ class MenueditorExtension extends SimpleExtension
                             'link'  => $tax['slug'] . '/' . $key,
                             'id'    => $tax['slug'] . '/' . $key,
                             'title' => $taxOpt,
-                            'type'  => $tax['name'] . ' ('.Trans::__('menueditor.search.taxonomy').')',
+                            'type'  => $tax['name'] . ' (' . Trans::__('menueditor.search.taxonomy', ['DEFAULT' => 'Taxonomy']) . ')',
                             'icon'  => isset($tax['icon_one']) ? str_replace(':', '-', $tax['icon_one']) : ''
                         ];
                     }
@@ -241,7 +289,7 @@ class MenueditorExtension extends SimpleExtension
                 $prefix = $app['config']->get('general/database/prefix', 'bolt_');
                 $tablename = $prefix . "taxonomy";
                 $slug = $tax['slug'];
-                $taxquery = '%'.$query.'%';
+                $taxquery = '%' . $query . '%';
                 $taxonomyQuery = "SELECT COUNT(name) as count, slug, name 
                                   FROM $tablename
                                   WHERE taxonomytype IN ('$slug')
@@ -257,7 +305,7 @@ class MenueditorExtension extends SimpleExtension
                         'link'  => $tax['slug'] . '/' . $result['slug'],
                         'id'    => $tax['slug'] . '/' . $result['slug'],
                         'title' => $result['name'],
-                        'type'  => $tax['name'] . ' ('.Trans::__('menueditor.search.taxonomy').')',
+                        'type'  => $tax['name'] . ' (' . Trans::__('menueditor.search.taxonomy', ['DEFAULT' => 'Taxonomy']) . ')',
                         'icon'  => isset($tax['icon_one']) ? str_replace(':', '-', $tax['icon_one']) : ''
                     ];
                 }
