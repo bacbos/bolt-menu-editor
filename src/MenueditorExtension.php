@@ -233,7 +233,7 @@ class MenueditorExtension extends SimpleExtension
                             'id'    => $tax['slug'] . '/' . $key,
                             'title' => $taxOpt,
                             'type'  => $tax['name'] . ' ('.Trans::__('menueditor.search.taxonomy').')',
-                            'icon'  => str_replace(':', '-', $tax['icon_one'])
+                            'icon'  => isset($tax['icon_one']) ? str_replace(':', '-', $tax['icon_one']) : ''
                         ];
                     }
                 }
@@ -258,7 +258,7 @@ class MenueditorExtension extends SimpleExtension
                         'id'    => $tax['slug'] . '/' . $result['slug'],
                         'title' => $result['name'],
                         'type'  => $tax['name'] . ' ('.Trans::__('menueditor.search.taxonomy').')',
-                        'icon'  => str_replace(':', '-', $tax['icon_one'])
+                        'icon'  => isset($tax['icon_one']) ? str_replace(':', '-', $tax['icon_one']) : ''
                     ];
                 }
             }
