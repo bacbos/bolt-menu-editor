@@ -1,68 +1,28 @@
 {% extends "_base/_page-nav.twig" %}
+{% import "@bolt/menuitem.twig" as item %}
 
 {% block page_title %}
-<form type="post" class="saveform" method="post">
-    <input type="hidden" name="menus" value="">
-    <div class="form-group">
-        <button type="submit" class="btn btn-success" data-content="{{ __('menueditor.actions.save')}} "> <i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-    </div>
-</form>
-{{ __('menueditor.title')}}
-{% endblock %}
-{% block page_nav 'Settings/Extensions' %}
-
-{% macro menuitem(menuitem, id, menu_config) %}
-    <li class="mjs-nestedSortable-expanded"{% for key, value in menu_config.fields|merge(menuitem) if key not in ['submenu'] %}data-{{key}}="{{value}}"{% endfor %} id="menuitem-{{id}}">
-        <div>
-            <div class="flex-row">
-                <span title="{{ __('menueditor.action.showhidechildren')}}" class="no-grow disclose"><i class="fa fa-minus" aria-hidden="true"></i></span>
-                <span title="{{ __('menueditor.action.showhideeditor')}}" class="no-grow expandEditor"><i class="fa fa-chevron-down" aria-hidden="true"></i></span>
-                <span class="itemTitle">{{menuitem.label}}</span>
-                <span title="{{ __('menueditor.action.delete')}}" class="no-grow deleteMenu"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
-            </div>
-
-            <div class="form-horizontal editor" style="display:none;">
-                <div class="fields">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">{{ __('menueditor.fields.label')}}</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" placeholder="{{ __('menueditor.fields.label')}}" name="label" value="{{menuitem.label}}">
-                        </div>
-                    </div>
-                    {% for key, value in menu_config.fields|merge(menuitem) if key not in ['submenu', 'label'] %}
-                        <div class="form-group" id="group-{{ id }}-{{ key }}">
-                            <label class="col-sm-2 control-label">{{__(key)|humanize}}</label>
-                            <div class="col-sm-8 col-xs-9">
-                                <input type="text" class="form-control" placeholder="{{__(key)|humanize}}" name="{{key}}" value="{{value}}">
-                            </div>
-                            <div class="col-sm-2 col-xs-3">
-                                <button class="btn btn-danger remove-field" data-id="{{id}}" data-key="{{key}}" title="{{ __('menueditor.actions.removefield')}}"><i class="fa fa-remove"></i></button>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-
-                <div class="footer clearfix text-right" id="footer{{ id }}">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#new-field" data-id="{{ id }}"><i class="fa fa-plus"></i> {{ __('menueditor.actions.addfield') }}</button>
-                </div>
-            </div>
+    <form type="post" class="saveform" method="post">
+        <input type="hidden" name="menus" value="">
+        <div class="form-group">
+            <button type="submit" class="btn btn-success" data-content="{{ __('menueditor.actions.save')}} ">
+                &nbsp;<i class="fa fa-floppy-o" aria-hidden="true"></i>
+            </button>
         </div>
-        <ol>
-            {% for submenuitem in menuitem.submenu|default([]) %}
-                {% set id = id ~ '-' ~ loop.index %}
-                {{ _self.menuitem(submenuitem, id, menu_config)}}
-            {% endfor %}
-        </ol>
+    </form>
+    {{ __('menueditor.title')}}
+{% endblock %}
 
-    </li>
-{% endmacro %}
+{% block page_nav 'Settings/Extensions' %}
 
 {% block page_main %}
     <div class="row">
         <div class="col-md-8 menus">
             <ul class="nav nav-tabs" role="tablist">
                 {% for name, menu in menus %}
-                    <li role="presentation" class="{{loop.first ? 'active'}}"><a href="#{{name}}" aria-controls="{{name}}" role="tab" data-toggle="tab">{{name}}</a></li>
+                    <li role="presentation" class="{{loop.first ? 'active'}}">
+                        <a href="#{{name}}" aria-controls="{{name}}" role="tab" data-toggle="tab">{{name}}</a>
+                    </li>
                 {% endfor %}
             </ul>
 
@@ -71,7 +31,7 @@
                     <div role="tabpanel" class="tab-pane {{loop.first ? 'active'}}" id="{{name}}">
                         <ol class="sortable">
                             {% for menuitem in menu %}
-                                {{ _self.menuitem(menuitem, loop.index, menu_config)}}
+                                {{ item.menuitem(menuitem, loop.index, menu_config, name) }}
                             {% endfor %}
                         </ol>
                     </div>
@@ -81,9 +41,13 @@
 
         <aside class="col-md-4 sidebar">
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#add-menu-item" aria-controls="add-menu-item" role="tab" data-toggle="tab">{{ __('menueditor.actions.add')}}</a></li>
+                <li role="presentation" class="active">
+                    <a href="#add-menu-item" aria-controls="add-menu-item" role="tab" data-toggle="tab">{{ __('menueditor.actions.add')}}</a>
+                </li>
                 {% if menu_config.backups.enable %}
-                    <li role="presentation" class=""><a href="#restore-backups" aria-controls="restore-backups" role="tab" data-toggle="tab">{{ __('menueditor.actions.restorebackups')}}</a></li>
+                    <li role="presentation" class="">
+                        <a href="#restore-backups" aria-controls="restore-backups" role="tab" data-toggle="tab">{{ __('menueditor.actions.restorebackups')}}</a>
+                    </li>
                 {% endif %}
             </ul>
             <div class="tab-content">
@@ -141,7 +105,9 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('menueditor.modal.close') }}"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="{{ __('menueditor.modal.close') }}">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                     <h4 class="modal-title" id="myModalLabel">{{ __('menueditor.modal.title') }}</h4>
                 </div>
                 <div class="modal-body">

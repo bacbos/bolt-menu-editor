@@ -13,6 +13,35 @@ backups:
 #    additional_field1: 'test'
 #    additional_field2: 'test'
 
+# If addcustomfields is set to false you are not able to add or delete your own fields.
+# Only the predefined fields are available then.
+
+# addcustomfields: true
+
+# Add extra options to your menu item fields.
+# There are 4 types of fields and the fallback is a text input.
+# text: Add a input text field.
+# textarea: Add a textarea if you need more chars.
+# checkbox: Add a checkbox for lettng the editor easily toggle menu features or so.
+# select: Prevent miss spelled values and let the editor just select from a couple of options
+# The select needs a property values with key: value pairs.
+# Default all fields can be deleted. If you want to avoid the deletion, add delete: false.
+
+# menufields:
+#     main:
+#         type:
+#             type: select
+#             values: {image: Image, something: Just something else}
+#         image:
+#             type: text
+#             delete: false
+#         path:
+#             delete: false
+#         use_icon:
+#             type: checkbox
+#         tooltip:
+#             type: textarea
+
 # Permission for the menu editor
 # Use an existing permission from the /bolt/roles page, or create your own
 permission: files:config
