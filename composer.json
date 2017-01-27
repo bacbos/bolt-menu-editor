@@ -18,6 +18,9 @@
         }, {
             "name": "Svante Richter",
             "email": "svante.richter@gmail.com"
+        }, {
+            "name": "Erwin Goossen",
+            "email": "erwin@navelpluisje.nl"
         }
     ],
     "minimum-stability": "dev",
@@ -36,6 +39,10 @@
     "extra": {
         "bolt-icon": "bolt-menu-editor.png",
         "bolt-assets": "web",
-        "bolt-class": "Bolt\\Extension\\Bacboslab\\Menueditor\\MenueditorExtension"
+        "bolt-class": "Bolt\\Extension\\Bacboslab\\Menueditor\\MenueditorExtension",
+        "bolt-screenshots": [
+            "screenshot.png",
+            "screenshot2.png"
+        ]
     }
 }

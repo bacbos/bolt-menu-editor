@@ -1,0 +1,22 @@
+{
+  "name": "menueditor",
+  "version": "1.0.0",
+  "description": "### Experimental warning - read details below",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bacbos/bolt-menu-editor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bacbos/bolt-menu-editor/issues"
+  },
+  "homepage": "https://github.com/bacbos/bolt-menu-editor/#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}
