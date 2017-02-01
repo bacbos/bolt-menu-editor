@@ -3,6 +3,7 @@
 namespace Bolt\Extension\Bacboslab\Menueditor;
 
 use Silex\Application;
+use Bolt\Version as Version;
 use Bolt\Menu\MenuEntry;
 use Bolt\Controller\Zone;
 use Bolt\Asset\File\JavaScript;
@@ -41,7 +42,13 @@ class MenueditorExtension extends SimpleExtension
     protected function registerMenuEntries()
     {
         $config = $this->getConfig();
-        $menu = new MenuEntry('extend/menueditor', 'menueditor');
+
+        // Check the version for mounting the menu. Since version 3.3 this has been changed
+        if (Version::compare('3.3', '>')) {
+            $menu = new MenuEntry('extend/menueditor', 'menueditor');
+        } else {
+            $menu = new MenuEntry('extensions/menueditor', 'menueditor');
+        }
         $menu->setLabel(Trans::__(
             'menueditor.menuitem',
             ['DEFAULT' => 'Menu editor']
@@ -128,7 +135,7 @@ class MenueditorExtension extends SimpleExtension
                 $parser->parse($yaml);
             } catch (\Exception $e) {
                 // Don't save menufile if we got a json on yaml error
-                $app['logger.flash']->error(Trans::__(
+                $app['logger.flash']->error(Trans:
                     'menueditor.flash.error',
                     ['DEFAULT' => 'Menu couldn\'t be saved, we have restored it to it\'s last known good state.']
                 ));
