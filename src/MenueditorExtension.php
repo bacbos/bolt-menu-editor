@@ -260,7 +260,7 @@ class MenueditorExtension extends SimpleExtension
 
         // Check contenttype listings
         foreach ($app['config']->get('contenttypes') as $ct) {
-            if ((!isset($ct['viewless']) || $ct['viewless'] === false) && (stripos($ct['slug'], $query) !== false || stripos($ct['name'], $query))) {
+            if ((!isset($ct['viewless']) || $ct['viewless'] === false) && (stripos($ct['slug'], $query) !== false || stripos($ct['name'], $query) !== false)) {
                 $items[] = [
                     'link'  => $ct['slug'],
                     'id'    => $ct['slug'],
@@ -275,7 +275,7 @@ class MenueditorExtension extends SimpleExtension
         foreach ($app['config']->get('taxonomy') as $tax) {
             if (isset($tax['options'])) {
                 foreach ($tax['options'] as $key => $taxOpt) {
-                    if (stripos($taxOpt, $query) || stripos($key, $query)) {
+                    if (stripos($taxOpt, $query) !== false || stripos($key, $query) !== false) {
                         $items[] = [
                             'link'  => $tax['slug'] . '/' . $key,
                             'id'    => $tax['slug'] . '/' . $key,
