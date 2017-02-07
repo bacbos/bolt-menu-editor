@@ -32,8 +32,14 @@ class MenueditorExtension extends SimpleExtension
      */
     protected function registerBackendRoutes(ControllerCollection $collection)
     {
-        $collection->match('/extend/menueditor', [$this, 'menuEditor']);
-        $collection->match('/extend/menueditor/search', [$this, 'menuEditorSearch']);
+        //Since version 3.3 ther is a new mounting point for the extensions
+        if (Version::compare('3.3', '>')) {
+            $collection->match('/extend/menueditor', [$this, 'menuEditor']);
+            $collection->match('/extend/menueditor/search', [$this, 'menuEditorSearch']);
+        } else {
+            $collection->match('/extensions/menueditor', [$this, 'menuEditor']);
+            $collection->match('/extensions/menueditor/search', [$this, 'menuEditorSearch']);
+        }
     }
 
     /**
@@ -42,13 +48,7 @@ class MenueditorExtension extends SimpleExtension
     protected function registerMenuEntries()
     {
         $config = $this->getConfig();
-
-        // Check the version for mounting the menu. Since version 3.3 this has been changed
-        if (Version::compare('3.3', '>')) {
-            $menu = new MenuEntry('extend/menueditor', 'menueditor');
-        } else {
-            $menu = new MenuEntry('extensions/menueditor', 'menueditor');
-        }
+        $menu = new MenuEntry('menueditor', 'menueditor');
         $menu->setLabel(Trans::__(
             'menueditor.menuitem',
             ['DEFAULT' => 'Menu editor']
@@ -135,7 +135,7 @@ class MenueditorExtension extends SimpleExtension
                 $parser->parse($yaml);
             } catch (\Exception $e) {
                 // Don't save menufile if we got a json on yaml error
-                $app['logger.flash']->error(Trans:
+                $app['logger.flash']->error(Trans::__(
                     'menueditor.flash.error',
                     ['DEFAULT' => 'Menu couldn\'t be saved, we have restored it to it\'s last known good state.']
                 ));
