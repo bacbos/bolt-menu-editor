@@ -3,6 +3,7 @@
 namespace Bolt\Extension\Bacboslab\Menueditor;
 
 use Silex\Application;
+use Bolt\Version as Version;
 use Bolt\Menu\MenuEntry;
 use Bolt\Controller\Zone;
 use Bolt\Asset\File\JavaScript;
@@ -31,8 +32,14 @@ class MenueditorExtension extends SimpleExtension
      */
     protected function registerBackendRoutes(ControllerCollection $collection)
     {
-        $collection->match('/extend/menueditor', [$this, 'menuEditor']);
-        $collection->match('/extend/menueditor/search', [$this, 'menuEditorSearch']);
+        //Since version 3.3 ther is a new mounting point for the extensions
+        if (Version::compare('3.3', '>')) {
+            $collection->match('/extend/menueditor', [$this, 'menuEditor']);
+            $collection->match('/extend/menueditor/search', [$this, 'menuEditorSearch']);
+        } else {
+            $collection->match('/extensions/menueditor', [$this, 'menuEditor']);
+            $collection->match('/extensions/menueditor/search', [$this, 'menuEditorSearch']);
+        }
     }
 
     /**
@@ -41,7 +48,7 @@ class MenueditorExtension extends SimpleExtension
     protected function registerMenuEntries()
     {
         $config = $this->getConfig();
-        $menu = new MenuEntry('extend/menueditor', 'menueditor');
+        $menu = new MenuEntry('menueditor', 'menueditor');
         $menu->setLabel(Trans::__(
             'menueditor.menuitem',
             ['DEFAULT' => 'Menu editor']
