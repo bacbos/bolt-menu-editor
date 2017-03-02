@@ -269,11 +269,12 @@ class MenueditorExtension extends SimpleExtension
         foreach ($app['config']->get('contenttypes') as $ct) {
             if ((!isset($ct['viewless']) || $ct['viewless'] === false) && (stripos($ct['slug'], $query) !== false || stripos($ct['name'], $query))) {
                 $items[] = [
-                    'link'  => $ct['slug'],
-                    'id'    => $ct['slug'],
-                    'title' => $ct['name'],
-                    'type'  => Trans::__('menueditor.search.overview', ['DEFAULT' => 'Overview']),
-                    'icon'  => isset($ct['icon_many']) ? str_replace(':', '-', $ct['icon_many']) : ''
+                    'link'    => $ct['slug'],
+                    'ctslug'  => $ct['slug'],
+                    'id'      => $ct['slug'],
+                    'title'   => $ct['name'],
+                    'type'    => Trans::__('menueditor.search.overview', ['DEFAULT' => 'Overview']),
+                    'icon'    => isset($ct['icon_many']) ? str_replace(':', '-', $ct['icon_many']) : ''
                 ];
             }
         }

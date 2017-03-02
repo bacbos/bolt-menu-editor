@@ -183,6 +183,9 @@ $().ready(function(){
         if(evt.params.data.contenttype){
             var path = evt.params.data.contenttype + '/' + evt.params.data.id;
             var label = $(".additem [name='label']").val() ? $(".additem [name='label']").val() : evt.params.data.title;
+        }else if(evt.params.data.ctslug){
+            var path = evt.params.data.ctslug;
+            var label = $(".additem [name='label']").val() ? $(".additem [name='label']").val() : evt.params.data.title;
         }else{
             var link = evt.params.data.link;
             var label = $(".additem [name='label']").val() ? $(".additem [name='label']").val() : (evt.params.data.title ? evt.params.data.title : evt.params.data.link);
