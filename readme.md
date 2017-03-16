@@ -30,7 +30,7 @@ For easier editing and preventing making mistakes, it is possible to style field
 * **checkbox**: Adding a checkbox. This can be used for easily toggling features in the menu
 * **select**: Adding a select field. Let the editor select from just a few options to prevent typos
 
-The select needs an extra attribute: `values`. The value is an key: value paired object like: `values: {image: Image, something: Just something else}`
+The select needs an extra attribute: `values`. The value is a key: value paired object like: `values: {image: Image, something: Just something else}`
 
 Default all fields except the label are deletable. This is not always a wanted feature. Thereby it can be turned of per field by setting a delete attribute to false.
 
