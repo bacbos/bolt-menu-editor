@@ -90,7 +90,7 @@
             <div class="input-group">
             {% endif %}
                 <select name="{{ key }}" class="form-control">
-                    <option value="none">Selecteer</option>
+                    <option value="none">{{ __('general.phrase.select') }}</option>
                     {% for name, label in values %}
                         <option value="{{ name }}" {{ value == name ? 'selected="selected"' : '' }}>{{ label }}</option>
                     {% endfor %}
