@@ -1,0 +1,68 @@
+#--
+# Auth/permissions/menuitem/title
+#--
+menueditor.notallowed: "El usuario conectado no tiene los permisos adecuados para usar esta ruta."
+menueditor.title: "Editor de menú"
+menueditor.menuitem: "Editor de menú"
+
+#--
+# Flash messages
+#--
+menueditor.flash.saved: "El menú ha sido guardado."
+menueditor.flash.error: "El menú no pudo ser guardado, se ha restaurado a su último buen estado."
+menueditor.flash.backup: 'Copia de seguridad de menú de %time% restaurada'
+menueditor.flash.removefield: "El campo <strong>%1%</strong> ha sido eliminado satisfactoriamente. No olvides guardar tus cambios."
+menueditor.flash.addedfield: "El campo <strong>%1%</strong> ha sido añadido satisfactoriamente. No olvides guardar tus cambios."
+
+#--
+# Search
+#--
+menueditor.search.taxonomy: "Taxonomía"
+menueditor.search.overview: "Visión general"
+
+#--
+# Actions
+#--
+menueditor.actions.save: "Guardar menús"
+menueditor.actions.showhidechildren: "Click para mostrar/ocultar hijos"
+menueditor.action.showhideeditor: "Click para mostrar/ocultar el editor"
+menueditor.action.delete: "Click para eliminar el elemento."
+menueditor.actions.add: "Añadir nuevo elemento al menú"
+menueditor.actions.restorebackups: "Restaurar copias de seguridad"
+menueditor.actions.addfield: "Añadir campo"
+menueditor.actions.removeField: "Eliminar campo"
+
+#--
+# Fields
+#--
+menueditor.fields.label: "Etiqueta"
+menueditor.fields.link: "Enlace"
+menueditor.fields.path: "Ruta"
+
+#--
+# Backups
+#--
+menueditor.backups.from: "De"
+menueditor.backups.date: "Fecha"
+menueditor.backups.restore: "Restaurar"
+menueditor.backups.nobackups: "Todavía no hay copias de seguridad, las copias de seguridad se crean automáticamente cuando guardas los menús."
+
+#--
+# JS translations
+#--
+menueditor.js.loading: "Cargando sugerencias"
+menueditor.js.newlink: "Nuevo enlace a"
+
+#--
+# Modal window
+#--
+menueditor.modal.close: "Cerrar"
+menueditor.modal.add: "Añadir"
+menueditor.modal.title: "Añadir nuevo campo"
+menueditor.modal.label: "Etiqueta"
+menueditor.modal.value: "Valor"
+
+#--
+# Confirm Questions
+#--
+menueditor.confirm.removefield: "¿Está seguro de que desea eliminar el campo: %1%?"
