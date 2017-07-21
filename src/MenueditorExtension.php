@@ -33,7 +33,7 @@ class MenueditorExtension extends SimpleExtension
     protected function registerBackendRoutes(ControllerCollection $collection)
     {
         //Since version 3.3 ther is a new mounting point for the extensions
-        if (Version::compare('3.3', '>')) {
+        if (Version::compare('3.2.999', '>')) {
             $collection->match('/extend/menueditor', [$this, 'menuEditor']);
             $collection->match('/extend/menueditor/search', [$this, 'menuEditorSearch']);
         } else {
