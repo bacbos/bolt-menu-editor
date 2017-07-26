@@ -2,22 +2,22 @@
 
 namespace Bolt\Extension\Bacboslab\Menueditor;
 
-use Silex\Application;
-use Bolt\Version as Version;
-use Bolt\Menu\MenuEntry;
-use Bolt\Controller\Zone;
 use Bolt\Asset\File\JavaScript;
 use Bolt\Asset\File\Stylesheet;
+use Bolt\Controller\Zone;
 use Bolt\Extension\SimpleExtension;
-use Silex\ControllerCollection;
+use Bolt\Menu\MenuEntry;
 use Bolt\Translation\Translator as Trans;
+use Bolt\Version;
+use Silex\Application;
+use Silex\ControllerCollection;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Parser;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Menueditor extension class.
@@ -32,14 +32,13 @@ class MenueditorExtension extends SimpleExtension
      */
     protected function registerBackendRoutes(ControllerCollection $collection)
     {
-        //Since version 3.3 ther is a new mounting point for the extensions
-        if (Version::compare('3.2.999', '>')) {
-            $collection->match('/extend/menueditor', [$this, 'menuEditor']);
-            $collection->match('/extend/menueditor/search', [$this, 'menuEditorSearch']);
-        } else {
-            $collection->match('/extensions/menueditor', [$this, 'menuEditor']);
-            $collection->match('/extensions/menueditor/search', [$this, 'menuEditorSearch']);
-        }
+        $baseUrl = Version::compare('3.2.999', '<')
+            ? '/extensions/menueditor'
+            : '/extend/menueditor'
+        ;
+
+        $collection->match($baseUrl, [$this, 'menuEditor']);
+        $collection->match($baseUrl . '/search', [$this, 'menuEditorSearch']);
     }
 
     /**
@@ -48,7 +47,7 @@ class MenueditorExtension extends SimpleExtension
     protected function registerMenuEntries()
     {
         $config = $this->getConfig();
-        $menu = new MenuEntry('menueditor', 'menueditor');
+        $menu = new MenuEntry('extend/menueditor', 'menueditor');
         $menu->setLabel(Trans::__(
             'menueditor.menuitem',
             ['DEFAULT' => 'Menu editor']
@@ -298,11 +297,11 @@ class MenueditorExtension extends SimpleExtension
                 $tablename = $prefix . "taxonomy";
                 $slug = $tax['slug'];
                 $taxquery = '%' . $query . '%';
-                $taxonomyQuery = "SELECT COUNT(name) as count, slug, name 
+                $taxonomyQuery = "SELECT COUNT(name) as count, slug, name
                                   FROM $tablename
                                   WHERE taxonomytype IN ('$slug')
                                   AND (slug LIKE ? OR name LIKE ?)
-                                  GROUP BY name, slug, sortorder 
+                                  GROUP BY name, slug, sortorder
                                   ORDER BY count";
                 $stmt = $app['db']->prepare($taxonomyQuery);
                 $stmt->bindValue(1, $taxquery);
