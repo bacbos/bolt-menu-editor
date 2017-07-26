@@ -47,7 +47,7 @@ class MenueditorExtension extends SimpleExtension
     protected function registerMenuEntries()
     {
         $config = $this->getConfig();
-        $menu = new MenuEntry('extend/menueditor', 'menueditor');
+        $menu = new MenuEntry('menueditor', 'menueditor');
         $menu->setLabel(Trans::__(
             'menueditor.menuitem',
             ['DEFAULT' => 'Menu editor']
