@@ -19,6 +19,9 @@ class FieldBuilderEvent extends Event
      */
     public function getFields()
     {
+        if(empty($this->fields)) {
+            $this->fields = [];
+        }        
         return $this->fields;
     }
     public function setFields($fields)
