@@ -42,6 +42,9 @@ backups:
 #         tooltip:
 #             type: textarea
 
+# Set allowEvent to true if you want additional fields from other extensions.
+allowEvent: false
+
 # Permission for the menu editor
 # Use an existing permission from the /bolt/roles page, or create your own
 permission: files:config
