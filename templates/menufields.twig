@@ -36,6 +36,21 @@
     {% endif %}
 {% endmacro %}
 
+{% macro event_field(value, id, menu_config, name, menuitem) %}
+    {% import _self as fields %}
+    {# delete defaults to true #}
+    {% set delete = true %}
+    {# If you're not allowed to add fields you also may not delete them #}
+    {% if menu_config.addcustomfields is defined and menu_config.addcustomfields == false %}
+        {% set delete = false %}
+    {% elseif value.delete is defined and value.delete == false %}
+        {% set delete = false %}
+    {% endif %}
+    {% if menuitem[value.key] is not defined %}
+        {{ fields.textfield(value.key, value.value, id, delete) }}
+    {% endif %}
+{% endmacro %}
+
 {# Generate a textfield #}
 {% macro textfield(key, value, id, delete) %}
     <div class="form-group" id="group-{{ id }}-{{ key }}">
