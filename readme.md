@@ -52,6 +52,44 @@ Default all fields except the label are deletable. This is not always a wanted f
                 type: textarea
 
 
+## Adding fields from extension
+
+There is an option to add more fields in an extension with help of Symfony's class `EventDispatcherInterface` and menueditor's event class `FieldBuilderEvent`. You will need to add these packages in your extension: 
+
+    use Bolt\Extension\Bacboslab\Menueditor\Event\FieldBuilderEvent;
+    use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
+Add the listener function to check `FieldBuilderEvent`.
+
+*Example*
+
+    protected function subscribe(EventDispatcherInterface $dispatcher)
+    {
+            $event = new FieldBuilderEvent();
+            $dispatcher->addListener(FieldBuilderEvent::BUILD, [$this, 'onRequest']);
+        } 
+    }
+
+Build the `onRequest` function:
+
+*Example used in translate extension*
+
+    public function onRequest(FieldBuilderEvent $event)
+    {
+        $labels = [];
+        $config = $this->getConfig();
+        foreach ($config['locales'] as $language) {
+            $labels[] = array('key' => $language['slug'].'label', 'value' => '', 'delete' => false);
+        }
+        $event->setFields($labels);
+    }
+
+The data array requires these options:
+
+* **key(string)**: The name of the field.
+* **value(string)**: The default value to the field.
+* **delete(boolean)**: Make the field deletable or not.
+
 ## Permission
 
 You can set the permission for the menu editor in the configuration. The value to set can be choosen from the permission levels available on `[your-site]/bolt/roles` or you can create your own at `[your-site]/bolt/file/edit/config/permissions.yml`
