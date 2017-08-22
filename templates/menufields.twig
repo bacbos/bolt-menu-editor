@@ -1,11 +1,11 @@
 {# function for adding fields. Returns a text input if no type is given #}
-{% macro field(key, value, id, menu_config, name) %}
+{% macro field(key, value, id, menu_config, name, menuitem, item) %}
     {% import _self as fields %}
 
     {# delete defaults to true #}
     {% set delete = true %}
 
-    {# If you'r not allowed to add fields you also may not delete them #}
+    {# If you're not allowed to add fields you also may not delete them #}
     {% if menu_config.addcustomfields is defined and menu_config.addcustomfields == false %}
         {% set delete = false %}
     {% elseif menu_config.menufields is defined %}
@@ -31,23 +31,12 @@
         {% else %}
             {{ fields.textfield(key, value, id, delete) }}
         {% endif %}
+    {% elseif item is not null %}
+        {% if menuitem[item.key] is not defined %}
+            {{ fields.textfield(item.key, item.value, id, delete) }}
+        {% endif %}
     {% else %}
         {{ fields.textfield(key, value, id, delete) }}
-    {% endif %}
-{% endmacro %}
-
-{% macro event_field(value, id, menu_config, name, menuitem) %}
-    {% import _self as fields %}
-    {# delete defaults to true #}
-    {% set delete = true %}
-    {# If you're not allowed to add fields you also may not delete them #}
-    {% if menu_config.addcustomfields is defined and menu_config.addcustomfields == false %}
-        {% set delete = false %}
-    {% elseif value.delete is defined and value.delete == false %}
-        {% set delete = false %}
-    {% endif %}
-    {% if menuitem[value.key] is not defined %}
-        {{ fields.textfield(value.key, value.value, id, delete) }}
     {% endif %}
 {% endmacro %}
 
