@@ -12,7 +12,6 @@ use Bolt\Translation\Translator as Trans;
 use Bolt\Version;
 use Silex\Application;
 use Silex\ControllerCollection;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -172,10 +171,7 @@ class MenueditorExtension extends SimpleExtension
 
         // Dispatch field builder event
         $event = new FieldBuilderEvent();
-        if($config['allowEvent'] === true) {        
-            $app['dispatcher']->dispatch(FieldBuilderEvent::BUILD, $event);                
-        }
-
+        $app['dispatcher']->dispatch(FieldBuilderEvent::BUILD, $event);
 
         // Get data and render backend view
         $data = [
