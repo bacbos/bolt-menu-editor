@@ -1,5 +1,7 @@
 <?php
+
 namespace Bolt\Extension\Bacboslab\Menueditor\Event;
+
 use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
@@ -19,13 +21,14 @@ class FieldBuilderEvent extends Event
      */
     public function getFields()
     {
-        if(empty($this->fields)) {
+        if (empty($this->fields)) {
             $this->fields = [];
-        }        
+        }
         return $this->fields;
     }
+
     public function setFields($fields)
     {
         $this->fields[] = $fields;
-    }    
+    }
 }
