@@ -33,7 +33,7 @@
 
                     {% for items in menu_event_fields %}
                         {% for item in items %}
-                            {{ fields.event_field(item, id, menu_config, name, menuitem) }}
+                            {{ fields.field(item, id, menu_config, name, menuitem) }}
                         {% endfor %}
                     {% endfor %}                    
                 </div>
