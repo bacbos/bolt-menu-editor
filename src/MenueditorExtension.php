@@ -173,11 +173,18 @@ class MenueditorExtension extends SimpleExtension
         $event = new FieldBuilderEvent();
         $app['dispatcher']->dispatch(FieldBuilderEvent::BUILD, $event);
 
+        // Add event fields in config
+        $eventContent = $event->getFields();
+        foreach ($eventContent as $items) {
+            foreach ($items as $item) {
+                $config['fields'][$item['key']] = $item['value'];
+            }
+        }
+
         // Get data and render backend view
         $data = [
             'menus' => $app['config']->get('menu'),
             'menu_config' => $config,
-            'menu_event_fields' => $event->getFields(),
             'JsTranslations' => json_encode([
                 'menueditor.js.loading' => Trans::__(
                     'menueditor.js.loading',
