@@ -1,5 +1,5 @@
 {# function for adding fields. Returns a text input if no type is given #}
-{% macro field(key, value, id, menu_config, name, menuitem, item) %}
+{% macro field(key, value, id, menu_config, name) %}
     {% import _self as fields %}
 
     {# delete defaults to true #}
@@ -30,10 +30,6 @@
             {{ fields.textarea(key, value, id, delete) }}
         {% else %}
             {{ fields.textfield(key, value, id, delete) }}
-        {% endif %}
-    {% elseif item is not null %}
-        {% if menuitem[item.key] is not defined %}
-            {{ fields.textfield(item.key, item.value, id, delete) }}
         {% endif %}
     {% else %}
         {{ fields.textfield(key, value, id, delete) }}
