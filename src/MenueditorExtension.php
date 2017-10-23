@@ -37,8 +37,8 @@ class MenueditorExtension extends SimpleExtension
             : '/extend/menueditor'
         ;
 
-        $collection->match($baseUrl, [$this, 'menuEditor']);
-        $collection->match($baseUrl . '/search', [$this, 'menuEditorSearch']);
+        $collection->match($baseUrl, [$this, 'menuEditor'])->bind('menuEditor');
+        $collection->match($baseUrl . '/search', [$this, 'menuEditorSearch'])->bind('menuEditorSearch');
     }
 
     /**
@@ -47,11 +47,9 @@ class MenueditorExtension extends SimpleExtension
     protected function registerMenuEntries()
     {
         $config = $this->getConfig();
-        $menu = new MenuEntry('menueditor', 'menueditor');
-        $menu->setLabel(Trans::__(
-            'menueditor.menuitem',
-            ['DEFAULT' => 'Menu editor']
-        ))
+        $menu = new MenuEntry('menueditor');
+        $menu->setLabel(Trans::__('menueditor.menuitem', ['DEFAULT' => 'Menu editor']))
+            ->setRoute('menuEditor')
             ->setIcon('fa:bars')
             ->setPermission($config['permission']);
 
