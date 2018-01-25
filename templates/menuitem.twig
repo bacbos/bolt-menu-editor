@@ -1,7 +1,7 @@
 
 {% macro menuitem(menuitem, id, menu_config, name) %}
 {% import "@bolt/menufields.twig" as fields %}
-    <li class="mjs-nestedSortable-expanded"{% for key, value in menu_config.fields|merge(menuitem) if key not in ['submenu'] %}data-{{key}}="{{value}}"{% endfor %} id="menuitem-{{id}}">
+    <li class="mjs-nestedSortable-expanded"{% for key, value in menu_config.fields|merge(menuitem) if key not in ['submenu'] %}data-{{key}}="{{value}}"{% endfor %} id="menuitem-{{ id ~ name }}">
         <div>
             <!-- The menuitem header -->
             <div class="flex-row">
@@ -33,8 +33,8 @@
                 </div>
 
                 {% if menu_config.addcustomfields is not defined or menu_config.addcustomfields != false %}
-                <div class="footer clearfix text-right" id="footer{{ id }}">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#new-field" data-id="{{ id }}">
+                <div class="footer clearfix text-right" id="footer{{ id ~ name }}">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#new-field" data-id="{{ id ~ name }}">
                         <i class="fa fa-plus"></i> {{ __('menueditor.actions.addfield', {'DEFAULT': 'Add field'}) }}
                     </button>
                 </div>
