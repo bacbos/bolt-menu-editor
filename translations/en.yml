@@ -11,8 +11,8 @@ menueditor.menuitem: "Menu editor"
 menueditor.flash.saved: "The menus have been saved"
 menueditor.flash.error: "Menu couldn\'t be saved, we have restored it to it\'s last known good state."
 menueditor.flash.backup: 'Menu backup from %time% restored'
-menueditor.flash.removefield: "The field <strong>%1%</strong> has successfully been removed. Don't forget to safe your changes."
-menueditor.flash.addedfield: "The field <strong>%1%</strong> has successfully been added. Don't forget to safe your changes."
+menueditor.flash.removefield: "The field <strong>%1%</strong> has successfully been removed. Don't forget to save your changes."
+menueditor.flash.addedfield: "The field <strong>%1%</strong> has successfully been added. Don't forget to save your changes."
 
 #--
 # Search
