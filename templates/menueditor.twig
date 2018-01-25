@@ -2,14 +2,6 @@
 {% import "@bolt/menuitem.twig" as item %}
 
 {% block page_title %}
-    <form type="post" class="saveform" method="post">
-        <input type="hidden" name="menus" value="">
-        <div class="form-group">
-            <button type="submit" class="btn btn-success" data-content="{{ __('menueditor.actions.save', {'DEFAULT':'Save menus'}) }} ">
-                &nbsp;<i class="fa fa-floppy-o" aria-hidden="true"></i>
-            </button>
-        </div>
-    </form>
     {{ __('menueditor.title', {'DEFAULT': 'Menu editor'})}}
 {% endblock %}
 
@@ -37,9 +29,27 @@
                     </div>
                 {% endfor %}
             </div>
+
+            {# Save button at the bottom of page #}
+            <form type="post" class="saveform" method="post">
+                <input type="hidden" name="menus" value="">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i> {{ __('menueditor.actions.save', {'DEFAULT':'Save menus'}) }}
+                </button>
+            </form>
+
         </div>
 
         <aside class="col-md-4 sidebar">
+
+            {# Save button in "aside" #}
+            <form type="post" class="saveform" method="post">
+                <input type="hidden" name="menus" value="">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-floppy-o" aria-hidden="true"></i> {{ __('menueditor.actions.save', {'DEFAULT':'Save menus'}) }}
+                </button>
+            </form>
+
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active">
                     <a href="#add-menu-item" aria-controls="add-menu-item" role="tab" data-toggle="tab">{{ __('menueditor.actions.add', {'DEFAULT': 'Add menu item'})}}</a>

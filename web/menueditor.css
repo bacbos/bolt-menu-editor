@@ -136,9 +136,10 @@ li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
 .select2-container--default .select2-results>.select2-results__options {
     max-height: 400px;
 }
+
 .saveform {
-    float: right;
 }
+
 .saveform button:before{
     content: attr(data-content);
 }
