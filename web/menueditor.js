@@ -144,7 +144,7 @@ $().ready(function(){
     }
 
     /*
-     * select2 with ajax seraching
+     * select2 with ajax searching
      */
     $(".additem [name='link']").select2({
         ajax: {

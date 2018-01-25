@@ -207,11 +207,11 @@ class MenueditorExtension extends SimpleExtension
                 ),
                 'menueditor.flash.removefield' => Trans::__(
                     'menueditor.flash.removefield',
-                    ['DEFAULT' => 'The field <strong>%1%</strong> has successfully been removed. Don\'t forget to safe your changes']
+                    ['DEFAULT' => 'The field <strong>%1%</strong> has successfully been removed. Don\'t forget to save your changes']
                 ),
                 'menueditor.flash.addedfield' => Trans::__(
                     'menueditor.flash.addedfield',
-                    ['DEFAULT' => 'The field <strong>%1%</strong> has successfully been added. Don\'t forget to safe your changes.']
+                    ['DEFAULT' => 'The field <strong>%1%</strong> has successfully been added. Don\'t forget to save your changes.']
                 ),
                 'menueditor.confirm.removefield' => Trans::__(
                     'menueditor.confirm.removefield',
