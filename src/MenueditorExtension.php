@@ -214,6 +214,10 @@ class MenueditorExtension extends SimpleExtension
                 'menueditor.confirm.removefield' => Trans::__(
                     'menueditor.confirm.removefield',
                     ['DEFAULT' => 'Are you sure you want to remove the field: %1%?']
+                ),
+                'menueditor.flash.addeditem' => Trans::__(
+                    'menueditor.flash.addeditem',
+                    ['DEFAULT' => 'Your new menuitem <strong>%1%</strong> has successfully been added on the bottom of the menu.']
                 )
             ])
         ];
