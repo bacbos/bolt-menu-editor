@@ -220,6 +220,7 @@ $().ready(function(){
             </div> \
         </li>';
         $('.active ol.sortable').append(markup);
+        showFlash(__('menueditor.flash.addeditem', [label]));
         registerEvents();
     }
 

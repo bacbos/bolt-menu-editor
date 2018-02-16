@@ -13,6 +13,7 @@ menueditor.flash.error: "Menü konnte nicht gespeichert werden, es wurde auf den
 menueditor.flash.backup: 'Backup des Menüs von %time% wiederhergestellt.'
 menueditor.flash.removefield: "Das Feld <strong>%1%</strong> wurde gelöscht. Vergessen Sie nicht, die Änderung zu speichern."
 menueditor.flash.addedfield: "Das Feld <strong>%1%</strong> wurde hinzugefügt. Vergessen Sie nicht, die Änderung zu speichern."
+menueditor.flash.addeditem: "Your new menu item <strong>%1%</strong> has successfully been added on the bottom of the menu."
 
 #--
 # Search
