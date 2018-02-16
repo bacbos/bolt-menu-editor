@@ -13,6 +13,7 @@ menueditor.flash.error: "Menyerna kunde inte sparas så de har återställts."
 menueditor.flash.backup: 'Meny backup från %time% har återställts'
 menueditor.flash.removefield: "The field <strong>%1%</strong> has successfully been remmoved. Don't forget to save your changes."
 menueditor.flash.addedfield: "The field <strong>%1%</strong> has successfully been added. Don't forget to save your changes."
+menueditor.flash.addeditem: "Your new menu item <strong>%1%</strong> has successfully been added on the bottom of the menu."
 
 #--
 # Search

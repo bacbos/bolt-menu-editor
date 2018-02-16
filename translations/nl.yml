@@ -13,6 +13,7 @@ menueditor.flash.error: "De menu's konden niet worden opgeslagen, we hebben de l
 menueditor.flash.backup: 'Menu backup van %time% tegrug gezet'
 menueditor.flash.removefield: "Het veld <strong>%1%</strong> is met succes verwijderd. Vergeet je wijzigingen niet op te slaan."
 menueditor.flash.addedfield: "Het veld <strong>%1%</strong> is met succes toegevoegd. Vergeet je wijzigingen niet op te slaan."
+menueditor.flash.addeditem: "het nieuwe menu item <strong>%1%</strong> is met succes toegevoegd onderaan het menu."
 
 #--
 # Search
