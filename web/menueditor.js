@@ -171,7 +171,6 @@ $().ready(function(){
                 newOption: true
             }
         },
-        multiple: true,
         maximumSelectionLength: 1,
         tags: true,
         escapeMarkup: function(markup) { return markup; },
