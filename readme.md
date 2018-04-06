@@ -2,7 +2,7 @@
 
 A missing visual menu editor for bolt CMS.
 
-This extension does not support Internet Explorer due to dependecies.
+This extension does not support Internet Explorer due to dependencies.
 
 Please edit config options to suit your needs before using this extension.
 
