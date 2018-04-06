@@ -1,6 +1,9 @@
 # Menu editor
 
-Le missing visual menu editor for bolt CMS.
+A missing visual menu editor for bolt CMS.
+
+This extension does not support Internet Explorer due to dependecies.
+
 Please edit config options to suit your needs before using this extension.
 
 ## Fields
