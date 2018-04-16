@@ -5,6 +5,7 @@ namespace Bolt\Extension\Bacboslab\Menueditor;
 use Bolt\Asset\File\JavaScript;
 use Bolt\Asset\File\Stylesheet;
 use Bolt\Controller\Zone;
+use Bolt\Extension\Bacboslab\Menueditor\Event\FieldBuilderEvent;
 use Bolt\Extension\SimpleExtension;
 use Bolt\Menu\MenuEntry;
 use Bolt\Translation\Translator as Trans;
@@ -164,6 +165,18 @@ class MenueditorExtension extends SimpleExtension
             $app['filesystem']->put('config://menu.yml', $backup->read());
             $app['logger.flash']->success(Trans::__('menueditor.flash.backup', ['%time%' => $backup->getCarbon()->diffForHumans()]));
             return new RedirectResponse($app['resources']->getUrl('currenturl'), 301);
+        }
+
+        // Dispatch field builder event
+        $event = new FieldBuilderEvent();
+        $app['dispatcher']->dispatch(FieldBuilderEvent::BUILD, $event);
+
+        // Add event fields in config
+        $eventContent = $event->getFields();
+        foreach ($eventContent as $items) {
+            foreach ($items as $item) {
+                $config['fields'][$item['key']] = $item['value'];
+            }
         }
 
         // Get data and render backend view

@@ -23,7 +23,7 @@
                     <div role="tabpanel" class="tab-pane {{loop.first ? 'active'}}" id="{{name}}">
                         <ol class="sortable">
                             {% for menuitem in menu %}
-                                {{ item.menuitem(menuitem, loop.index, menu_config, name) }}
+                                {{ item.menuitem(menuitem, loop.index, menu_config, name, menu_event_fields) }}
                             {% endfor %}
                         </ol>
                     </div>
