@@ -29,7 +29,7 @@ $().ready(function(){
         tabSize: 25,
         tolerance: 'pointer',
         toleranceElement: '> div',
-        maxLevels: 4,
+        maxLevels: 0,
         isTree: true,
         expandOnHover: 700,
         startCollapsed: true
